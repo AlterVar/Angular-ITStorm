@@ -1,0 +1,46 @@
+@import "../../../../assets/styles/variables";
+@import "../../../../assets/styles/mixins";
+
+header.header {
+  font-weight: 500;
+
+  .container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 40px 100px;
+
+    .logo {
+      width: 85px;
+      height: 47px;
+    }
+
+    .main-menu {
+      .main-menu-list {
+        list-style: none;
+        display: flex;
+        align-items: center;
+        gap: 30px;
+
+        .main-menu-item {
+          color: $dark-blue-text-color;
+        }
+      }
+    }
+
+    .header-phone a {
+      text-decoration: none;
+      color: $light-blue-text-color;
+    }
+
+    .profile {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      .profile-image {
+        margin-right: 7px;
+      }
+    }
+  }
+}

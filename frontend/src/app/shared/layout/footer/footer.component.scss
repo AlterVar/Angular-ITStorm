@@ -1,0 +1,95 @@
+@import "../../../../assets/styles/variables";
+@import "../../../../assets/styles/mixins";
+
+footer.footer {
+  .container {
+    background-color: #b9d5fd;
+    padding: 40px 100px;
+
+    .navigation {
+      display: flex;
+      align-items: center;
+      margin-bottom: 40px;
+
+      .logo {
+        width: 85px;
+        height: 47px;
+        margin-right: 40px;
+      }
+
+      .main-menu {
+        .main-menu-list {
+          list-style: none;
+          display: flex;
+          align-items: center;
+          gap: 30px;
+
+          .main-menu-item {
+            color: $dark-blue-text-color;
+          }
+        }
+      }
+    }
+
+    .info {
+      display: flex;
+      gap: 60px;
+      margin-bottom: 6px;
+
+      .info-section {
+        .info-title {
+          color: $light-blue-text-color;
+          font-weight: 500;
+          font-size: 16px;
+          margin-bottom: 10px;
+        }
+
+        .info-description {
+          color: $dark-blue-text-color;
+          line-height: 130%;
+
+          &:has(+ :is(button, p)) {
+            margin-bottom: 10px;
+          }
+
+          a {
+            width: 24px;
+            height: 24px;
+          }
+        }
+
+        &.info-address {
+          max-width: 253px;
+        }
+
+        &.info-phone {
+          .btn {
+            width: 153px;
+            height: 36px;
+          }
+        }
+
+        &.info-email {
+          .info-description {
+            font-size: 14px;
+          }
+        }
+
+        &.info-socials {
+          .info-title {
+            margin-bottom: 15px;
+          }
+          .info-description {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+          }
+        }
+      }
+    }
+
+    .copyrights {
+      color: $light-blue-text-color;
+    }
+  }
+}
