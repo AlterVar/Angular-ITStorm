@@ -17,6 +17,10 @@ html {
   margin: 0 auto;
 }
 
+a, input, label {
+  cursor: pointer;
+}
+
 .btn {
   outline: none;
   border: none;
@@ -25,4 +29,16 @@ html {
   padding: 10px 20px;
   box-sizing: border-box;
   border-radius: 5px;
+  cursor: pointer;
+}
+
+input:not([type='checkbox']) {
+  border: 2px solid $light-blue-text-color;
+  border-radius: 3px;
+  background-color: #fff;
+  outline: none;
+  width: 422px;
+  height: 53px;
+  box-sizing: border-box;
+  padding: 20px;
 }
