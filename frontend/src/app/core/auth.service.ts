@@ -22,6 +22,10 @@ export class AuthService {
     this.isLogged = !!localStorage.getItem(this.accessTokenKey);
   }
 
+  public getIsLoggedIn() {
+    return this.isLogged;
+  }
+
   setTokens(accessToken: string, refreshToken: string, userId: string) {
     localStorage.setItem(this.accessTokenKey, accessToken);
     localStorage.setItem(this.refreshTokenKey, refreshToken);
