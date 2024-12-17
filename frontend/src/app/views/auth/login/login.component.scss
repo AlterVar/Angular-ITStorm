@@ -1,0 +1,27 @@
+@import "../../../../assets/styles/auth";
+
+.login {
+  .container {
+    .login-form {
+      form {
+        .agreement {
+          align-items: center;
+          input {
+            top: 0;
+          }
+
+          .checkbox {
+            margin-top: 0;
+          }
+
+          label {
+            line-height: normal;
+          }
+        }
+      }
+    }
+    .image-container {
+      background-image: url("../../../../assets/images/login-bg.png");
+    }
+  }
+}

@@ -15,8 +15,8 @@ export class SignUpComponent implements OnInit {
   signupForm = this.fb.group({
     name: ['', [Validators.required]],
     email: ['', [Validators.email, Validators.required]],
-    password: ['', [Validators.required, Validators.pattern(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,}$/)]],
-    agree: [false]
+    password: ['', [Validators.required, Validators.pattern(/^[0-9a-zA-Z]{8,}$/)]],
+    agree: [false, Validators.requiredTrue]
   })
 
   constructor(private fb: FormBuilder,
@@ -39,7 +39,7 @@ export class SignUpComponent implements OnInit {
             let loginResponse = data as LoginResponseType;
             if (!loginResponse.accessToken || !loginResponse.refreshToken
               || !loginResponse.userId) {
-              error = 'Ошибка авторизации';
+              error = 'Ошибка регистрации';
             }
 
             //TODO: подключить snackBar

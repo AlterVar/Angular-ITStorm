@@ -35,4 +35,10 @@ export class AuthService {
       name, email, password
     })
   }
+
+  login(email: string, password: string, rememberMe: boolean): Observable<DefaultResponseType | LoginResponseType> {
+    return this.http.post<DefaultResponseType | LoginResponseType>(environment.api + 'login', {
+      email, password, rememberMe
+    })
+  }
 }
