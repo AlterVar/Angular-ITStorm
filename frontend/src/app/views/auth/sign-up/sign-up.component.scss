@@ -6,6 +6,7 @@
 
       form {
         .agreement {
+          cursor: pointer;
           align-items: start;
 
           input {
@@ -13,6 +14,7 @@
           }
 
           .checkbox {
+            cursor: pointer;
             margin-top: 4px;
           }
 

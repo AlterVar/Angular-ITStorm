@@ -42,7 +42,8 @@ header.header {
         margin-right: 7px;
       }
 
-      .profile-text a {
+      .profile-text a,
+      .profile-text button{
         text-decoration: none;
         color: $dark-blue-text-color;
       }

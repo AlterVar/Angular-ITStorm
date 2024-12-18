@@ -5,12 +5,15 @@
     .login-form {
       form {
         .agreement {
+          cursor: pointer;
           align-items: center;
           input {
+            cursor: pointer;
             top: 0;
           }
 
           .checkbox {
+            cursor: pointer;
             margin-top: 0;
           }
 

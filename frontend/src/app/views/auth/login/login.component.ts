@@ -5,6 +5,7 @@ import {Router} from "@angular/router";
 import {DefaultResponseType} from "../../../../types/default-response.type";
 import {LoginResponseType} from "../../../../types/login-response.type";
 import {HttpErrorResponse} from "@angular/common/http";
+import {MatSnackBar} from "@angular/material/snack-bar";
 
 @Component({
   selector: 'login',
@@ -20,7 +21,8 @@ export class LoginComponent implements OnInit {
 
   constructor(private fb: FormBuilder,
               private authService: AuthService,
-              private router: Router) { }
+              private router: Router,
+              private _snackBar: MatSnackBar) { }
 
   ngOnInit(): void {
   }
@@ -42,17 +44,17 @@ export class LoginComponent implements OnInit {
 
             //TODO: подключить snackBar
             if (error) {
-              console.log(error);
+              this._snackBar.open(error);
             }
             this.authService.setTokens(loginResponse.accessToken, loginResponse.refreshToken, loginResponse.userId);
-            console.log('Вы успешно вошли в аккаунт');
+            this._snackBar.open('Вы успешно вошли в аккаунт');
             this.router.navigate(['/']);
           },
           error: (errorResponse: HttpErrorResponse) => {
             if (errorResponse.error && errorResponse.error.message) {
-              console.log(errorResponse.error.message);
+              this._snackBar.open(errorResponse.error.message);
             } else {
-              console.log('Ошибка авторизации');
+              this._snackBar.open('Ошибка авторизации');
             }
           }
         })
