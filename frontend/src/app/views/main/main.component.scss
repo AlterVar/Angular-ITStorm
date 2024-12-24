@@ -1,0 +1,115 @@
+@import "../../../assets/styles/variables";
+@import "../../../assets/styles/mixins";
+
+.main {
+  .container {
+    .slider {
+      margin-bottom: 120px;
+      position: relative;
+
+      .carousel-arrows {
+        .move-backward {
+          position: absolute;
+          top: 45%;
+          z-index: 200;
+          left: 15px;
+        }
+        .move-forward {
+          position: absolute;
+          top: 45%;
+          z-index: 200;
+          right: 15px;
+        }
+      }
+
+      .slider-dots {
+        z-index: 200;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 20px;
+        position: absolute;
+        bottom: 10px;
+        left: 50%;
+
+        .slider-dot {
+          border: 1px solid #fff;
+          border-radius: 50%;
+          width: 10px;
+          height: 10px;
+          cursor: pointer;
+
+          &.active {
+            background-color: #fff;
+          }
+        }
+      }
+
+      .carousel-items {
+        height: 500px;
+        overflow: hidden;
+
+        .slider-item {
+          display: flex;
+          justify-content: flex-end;
+          align-items: center;
+          width: 1239px;
+
+          img {
+            width: 749px;
+            height: 500px;
+          }
+
+          .slider-text {
+            width: 702px;
+            height: 702px;
+            position: absolute;
+            top: 0;
+            left: 0;
+            border-bottom-right-radius: 702px;
+            background-color: #b9d5fd;
+            padding: 100px 80px;
+            box-sizing: border-box;
+
+            .slider-tag {
+              color: $light-blue-text-color;
+              font-weight: 600;
+              font-size: 12px;
+              letter-spacing: 4.8px;
+              text-transform: uppercase;
+            }
+
+            .slider-text-title {
+              font-family: "Lora", sans-serif;
+              font-weight: 400;
+              font-size: 49px;
+              color: #fff;
+              line-height: 130%;
+
+              span {
+                color: $light-blue-text-color;
+              }
+            }
+
+            .slider-text-title:not(:has(+ .slider-text-description)), .slider-text-description {
+              margin-bottom: 40px;
+            }
+
+            .slider-text-description {
+              margin-top: 20px;
+              max-width: 456px;
+              font-size: 24px;
+              color: #fff;
+              line-height: 130%;
+            }
+
+            .btn {
+              width: 163px;
+              height: 51px;
+            }
+          }
+        }
+      }
+    }
+  }
+}
