@@ -3,6 +3,11 @@
 
 .main {
   .container {
+    .section-title {
+      @include sectionHeading;
+      color: $light-blue-text-color;
+    }
+
     .slider {
       margin-bottom: 120px;
       position: relative;
@@ -14,6 +19,7 @@
           z-index: 200;
           left: 15px;
         }
+
         .move-forward {
           position: absolute;
           top: 45%;
@@ -106,6 +112,70 @@
             .btn {
               width: 163px;
               height: 51px;
+            }
+          }
+        }
+      }
+    }
+
+    .services {
+      margin-bottom: 120px;
+
+      .section-title {
+        margin-bottom: 40px;
+      }
+
+      .services-cards {
+        list-style: none;
+        display: flex;
+        justify-content: space-between;
+
+        .services-card {
+          max-width: 290px;
+          display: grid;
+
+          .card-image {
+            width: 290px;
+            height: 290px;
+            border-radius: 5px;
+            margin-bottom: 15px;
+
+            img {
+              display: flex;
+            }
+          }
+          .card-text {
+            margin-bottom: 15px;
+            .card-title {
+              font-weight: 500;
+              font-size: 20px;
+              color: $light-blue-text-color;
+              margin-bottom: 10px;
+            }
+
+            .card-description {
+              font-size: 14px;
+              color: $dark-blue-text-color;
+              line-height: 130%;
+            }
+          }
+
+          .card-extra {
+            align-self: end;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            .card-price {
+              font-weight: 600;
+              font-size: 20px;
+              color: $light-blue-text-color;
+            }
+
+            .card-btn {
+              width: 163px;
+              height: 51px;
+              padding: 15px 33px;
             }
           }
         }
