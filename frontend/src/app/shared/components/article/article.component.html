@@ -1,0 +1,7 @@
+<div class="article">
+  <div class="article-picture" style="background-image: url({{serverStaticPath + 'articles/' + article.image}})"></div>
+  <div class="article-category">{{article.category}}</div>
+  <h3 class="article-title">{{article.title}}</h3>
+  <p class="article-description">{{article.description}}</p>
+  <a routerLink="/articles/{{article.url}}" class="article-extra">Читать дальше</a>
+</div>

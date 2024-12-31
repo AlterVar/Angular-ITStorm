@@ -44,7 +44,6 @@ export class SignUpComponent implements OnInit {
               error = 'Ошибка регистрации';
             }
 
-            //TODO: подключить snackBar
             if (error) {
               this._snackBar.open(error);
             }

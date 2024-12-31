@@ -267,5 +267,34 @@
         }
       }
     }
+
+    .popular-articles {
+      margin-bottom: 120px;
+
+      .section-title {
+        margin-bottom: 40px;
+      }
+      .popular-articles-list {
+        display: flex;
+        align-items: start;
+        gap: 25px;
+        margin-bottom: 40px;
+      }
+      .blog-link {
+        display: flex;
+        gap: 12px;
+        align-items: center;
+        justify-content: end;
+        text-decoration: none;
+        color: $light-blue-text-color;
+        font-weight: 500;
+        font-size: 20px;
+
+        svg {
+          width: 16px;
+          height: 16px;
+        }
+      }
+    }
   }
 }

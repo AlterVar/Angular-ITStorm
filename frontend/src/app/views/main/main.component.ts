@@ -1,5 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import {OwlOptions, SlideModel, SlidesOutputData} from "ngx-owl-carousel-o";
+import {ArticlesService} from "../../services/articles.service";
+import {DefaultResponseType} from "../../../types/default-response.type";
+import {ArticleType} from "../../../types/article.type";
+import {HttpErrorResponse} from "@angular/common/http";
+import {MatSnackBar} from "@angular/material/snack-bar";
 
 @Component({
   selector: 'app-main',
@@ -7,6 +12,8 @@ import {OwlOptions, SlideModel, SlidesOutputData} from "ngx-owl-carousel-o";
   styleUrls: ['./main.component.scss']
 })
 export class MainComponent implements OnInit {
+  popularArticles: ArticleType[] = [];
+
   customOptions: OwlOptions = {
     loop: true,
     mouseDrag: false,
@@ -25,9 +32,26 @@ export class MainComponent implements OnInit {
   }
   activeSlide: SlideModel = {id: 'slide-1'};
 
-  constructor() { }
+  constructor(private articleService: ArticlesService,
+              private _snackBar: MatSnackBar,) { }
 
   ngOnInit(): void {
+    this.articleService.getPopularArticles()
+      .subscribe({
+        next: (data: DefaultResponseType | ArticleType[]) => {
+          if ((data as DefaultResponseType).error !== undefined) {
+            console.log((data as DefaultResponseType).message);
+          }
+          if (data as ArticleType[]) {
+            this.popularArticles = data as ArticleType[];
+          }
+        },
+        error: (errorResponse: HttpErrorResponse) => {
+          if (errorResponse.error && errorResponse.error.message) {
+            console.log(errorResponse.error.message);
+          }
+        }
+      })
   }
 
   makeActive(data: SlidesOutputData) {
