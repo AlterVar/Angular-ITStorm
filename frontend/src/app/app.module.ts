@@ -21,8 +21,7 @@ import { ArticleComponent } from './shared/components/article/article.component'
     LayoutComponent,
     HeaderComponent,
     FooterComponent,
-    MainComponent,
-    ArticleComponent
+    MainComponent
   ],
   imports: [
     BrowserModule,

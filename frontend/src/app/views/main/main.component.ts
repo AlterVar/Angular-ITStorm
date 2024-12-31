@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {OwlOptions, SlideModel, SlidesOutputData} from "ngx-owl-carousel-o";
-import {ArticlesService} from "../../services/articles.service";
+import {ArticlesService} from "../../shared/services/articles.service";
 import {DefaultResponseType} from "../../../types/default-response.type";
 import {ArticleType} from "../../../types/article.type";
 import {HttpErrorResponse} from "@angular/common/http";
@@ -14,7 +14,7 @@ import {MatSnackBar} from "@angular/material/snack-bar";
 export class MainComponent implements OnInit {
   popularArticles: ArticleType[] = [];
 
-  customOptions: OwlOptions = {
+  customOptionsHero: OwlOptions = {
     loop: true,
     mouseDrag: false,
     touchDrag: false,
@@ -30,10 +30,35 @@ export class MainComponent implements OnInit {
     },
     nav: false
   }
+
+  customOptionsReviews: OwlOptions = {
+    loop: true,
+    mouseDrag: false,
+    touchDrag: false,
+    pullDrag: false,
+    margin: 24,
+    dots: false,
+    navSpeed: 700,
+    navText: ['', ''],
+    responsive: {
+      0: {
+        items: 1
+      },
+      400: {
+        items: 2
+      },
+      940: {
+        items: 3
+      }
+    },
+    nav: false
+  }
+
   activeSlide: SlideModel = {id: 'slide-1'};
 
   constructor(private articleService: ArticlesService,
-              private _snackBar: MatSnackBar,) { }
+              private _snackBar: MatSnackBar,) {
+  }
 
   ngOnInit(): void {
     this.articleService.getPopularArticles()
@@ -55,6 +80,6 @@ export class MainComponent implements OnInit {
   }
 
   makeActive(data: SlidesOutputData) {
-   this.activeSlide = (data.slides && data.slides.length > 0) ? data.slides[0] : {id: 'slide-1'};
+    this.activeSlide = (data.slides && data.slides.length > 0) ? data.slides[0] : {id: 'slide-1'};
   }
 }

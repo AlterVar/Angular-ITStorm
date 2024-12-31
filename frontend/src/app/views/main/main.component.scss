@@ -8,7 +8,7 @@
       color: $light-blue-text-color;
     }
 
-    .slider {
+    .hero-slider {
       margin-bottom: 120px;
       position: relative;
 
@@ -293,6 +293,65 @@
         svg {
           width: 16px;
           height: 16px;
+        }
+      }
+    }
+
+    .reviews {
+      margin-bottom: 120px;
+
+      .section-title {
+        margin-bottom: 20px;
+      }
+
+      .carousel-arrows {
+        position: relative;
+        .move-backward {
+          position: absolute;
+          top: 115px;
+          z-index: 200;
+          left: -30px;
+        }
+
+        .move-forward {
+          position: absolute;
+          top: 115px;
+          z-index: 200;
+          right: -30px;
+        }
+      }
+
+      .carousel-items {
+        position: relative;
+        .review {
+          border: 2px solid $light-blue-text-color;
+          border-radius: 5px;
+          padding: 28px;
+          box-sizing: border-box;
+          width: 396px;
+          height: 267px;
+
+          .review-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+
+            img {
+              width: 60px;
+              height: 60px;
+              margin-right: 25px;
+            }
+
+            .review-name {
+              font-weight: 600;
+              font-size: 18px;
+            }
+          }
+
+          .review-body {
+            line-height: 140%;
+            color: $description-color;
+          }
         }
       }
     }
