@@ -7,6 +7,7 @@ import {HttpErrorResponse} from "@angular/common/http";
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {MatDialog, MatDialogRef} from "@angular/material/dialog";
 import {FormBuilder, Validators} from "@angular/forms";
+import {CallbackService} from "../../shared/services/callback.service";
 
 @Component({
   selector: 'app-main',
@@ -18,6 +19,7 @@ export class MainComponent implements OnInit {
   dialogData: string = 'Услуга';
   dialog: HTMLElement | null = null;
   dialogBtn: HTMLElement | null = null;
+  requestIsSent: boolean = false;
 
   customOptionsHero: OwlOptions = {
     loop: true,
@@ -62,13 +64,14 @@ export class MainComponent implements OnInit {
   serviceForm = this.fb.group({
     service: [{value: '', disabled: true}],
     name: ['', Validators.required],
-    phone: ['', Validators.required]
+    phone: ['', [Validators.required, Validators.pattern(/^[0-9]*$/)]]
   })
 
 
   activeSlide: SlideModel = {id: 'slide-1'};
 
   constructor(private articleService: ArticlesService,
+              private callbackService: CallbackService,
               private _snackBar: MatSnackBar,
               private fb: FormBuilder) {
   }
@@ -108,8 +111,28 @@ export class MainComponent implements OnInit {
 
   closeDialog(event: Event) {
     event.stopPropagation();
+    this.requestIsSent = false;
     if (this.dialog && (event.target === event.currentTarget || event.currentTarget === this.dialogBtn)) {
       this.dialog.style.display = 'none';
+    }
+  }
+
+  //TODO: возможно использовать таки AngularMaterials
+  sendCallbackRequest() {
+    if (this.serviceForm.value.name && this.serviceForm.value.phone && this.serviceForm.controls.service.value) {
+      this.callbackService.sendCallbackRequest({
+        name: this.serviceForm.value.name,
+        phone: this.serviceForm.value.phone,
+        service: this.serviceForm.controls.service.value,
+        type: "order"
+      })
+        .subscribe((data: DefaultResponseType) => {
+          if (data.error) {
+            this._snackBar.open('Не удалось отправить запрос. Пожалуйста, обратитесь в службу поддержки');
+            console.log(data.message);
+          }
+          this.requestIsSent = true;
+        })
     }
   }
 }

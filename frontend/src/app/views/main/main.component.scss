@@ -422,10 +422,18 @@
     background-color: #fff;
     padding: 92px;
     border-radius: 10px;
+    z-index: 500;
     display: flex;
     flex-direction: column;
     align-items: center;
-    z-index: 500;
+    justify-content: center;
+
+    .dialog-option{
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
 
     .close-btn {
       position: absolute;
@@ -459,7 +467,7 @@
         font-size: 14px;
 
         &:not([disabled]) {
-          cursor: pointer;
+          cursor: text;
         }
 
         &::placeholder {
@@ -472,5 +480,16 @@
        width: 422px;
        height: 51px;
      }
+
+    .dialog-description {
+      font-weight: 500;
+      font-size: 14px;
+      margin-bottom: 40px;
+    }
+
+    .dialog-confirm-btn {
+      width: 73px;
+      height: 36px;
+    }
   }
 }
