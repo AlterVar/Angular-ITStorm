@@ -14,6 +14,9 @@ import {AuthInterceptor} from "./core/auth.interceptor";
 import {MatMenuModule} from "@angular/material/menu";
 import {CarouselModule} from "ngx-owl-carousel-o";
 import { ArticleComponent } from './shared/components/article/article.component';
+import {MatDialogModule} from "@angular/material/dialog";
+import {MatButtonModule} from "@angular/material/button";
+import {ReactiveFormsModule} from "@angular/forms";
 
 @NgModule({
   declarations: [
@@ -31,6 +34,9 @@ import { ArticleComponent } from './shared/components/article/article.component'
     CarouselModule,
     BrowserAnimationsModule,
     SharedModule,
+    MatDialogModule,
+    MatButtonModule,
+    ReactiveFormsModule,
     MatMenuModule
   ],
   providers: [

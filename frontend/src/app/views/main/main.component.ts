@@ -1,10 +1,12 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, ElementRef, OnInit, TemplateRef, ViewChild} from '@angular/core';
 import {OwlOptions, SlideModel, SlidesOutputData} from "ngx-owl-carousel-o";
 import {ArticlesService} from "../../shared/services/articles.service";
 import {DefaultResponseType} from "../../../types/default-response.type";
 import {ArticleType} from "../../../types/article.type";
 import {HttpErrorResponse} from "@angular/common/http";
 import {MatSnackBar} from "@angular/material/snack-bar";
+import {MatDialog, MatDialogRef} from "@angular/material/dialog";
+import {FormBuilder, Validators} from "@angular/forms";
 
 @Component({
   selector: 'app-main',
@@ -13,6 +15,8 @@ import {MatSnackBar} from "@angular/material/snack-bar";
 })
 export class MainComponent implements OnInit {
   popularArticles: ArticleType[] = [];
+  dialogData: string = 'Услуга';
+  dialog: HTMLElement | null = null;
 
   customOptionsHero: OwlOptions = {
     loop: true,
@@ -21,7 +25,7 @@ export class MainComponent implements OnInit {
     pullDrag: false,
     margin: 24,
     dots: true,
-    navSpeed: 700,
+    navSpeed: 500,
     navText: ['', ''],
     responsive: {
       0: {
@@ -54,13 +58,23 @@ export class MainComponent implements OnInit {
     nav: false
   }
 
+  serviceForm = this.fb.group({
+    service: [{value: this.dialogData, disabled: true}],
+    name: ['', Validators.required],
+    phone: ['', Validators.required]
+  })
+
+
   activeSlide: SlideModel = {id: 'slide-1'};
 
   constructor(private articleService: ArticlesService,
-              private _snackBar: MatSnackBar,) {
+              private _snackBar: MatSnackBar,
+              private fb: FormBuilder) {
+    this.dialog = document.getElementById('services-dialog');
   }
 
   ngOnInit(): void {
+    this.dialog = document.getElementById('services-dialog');
     this.articleService.getPopularArticles()
       .subscribe({
         next: (data: DefaultResponseType | ArticleType[]) => {
@@ -81,5 +95,19 @@ export class MainComponent implements OnInit {
 
   makeActive(data: SlidesOutputData) {
     this.activeSlide = (data.slides && data.slides.length > 0) ? data.slides[0] : {id: 'slide-1'};
+  }
+
+  openDialog(title: string) {
+    this.dialogData = title;
+    if (this.dialog) {
+      this.dialog.style.display = 'flex';
+    }
+  }
+
+  closeDialog(event: Event) {
+    event.stopPropagation();
+    if (this.dialog && event.target === this.dialog) {
+      this.dialog.style.display = 'none';
+    }
   }
 }

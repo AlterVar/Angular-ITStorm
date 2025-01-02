@@ -401,3 +401,76 @@
     }
   }
 }
+
+.services-dialog {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(7, 23, 57, 0.4);
+  z-index: 400;
+
+  .dialog-container {
+    position: relative;
+    width: 727px;
+    height: 489px;
+    box-sizing: border-box;
+    background-color: #fff;
+    padding: 92px;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    z-index: 500;
+
+    .close-btn {
+      position: absolute;
+      cursor: pointer;
+      top: 30px;
+      right: 30px;
+    }
+
+    .dialog-title {
+      text-align: center;
+      color: $light-blue-text-color;
+      font-family: "Lora", sans-serif;
+      font-weight: 400;
+      font-size: 38px;
+      margin-bottom: 20px;
+    }
+
+    .dialog-content {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 5px;
+      margin-bottom: 20px;
+
+      input {
+        border: 2px solid $light-blue-text-color;
+        border-radius: 3px;
+        padding: 20px;
+        box-sizing: border-box;
+        color: $light-blue-text-color;
+        font-size: 14px;
+
+        &:not([disabled]) {
+          cursor: pointer;
+        }
+
+        &::placeholder {
+          color: #a8aba7;
+          font-size: 14px;
+        }
+      }
+    }
+     .dialog-btn {
+       width: 422px;
+       height: 51px;
+     }
+  }
+}

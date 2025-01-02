@@ -43,7 +43,7 @@
                 <h2 class="slider-text-title">
                   Продвижение в Instagram для вашего бизнеса <span>-15%</span>!
                 </h2>
-                <button class="btn">Подробнее</button>
+                <button class="btn" (click)="openDialog('Продвижение')">Подробнее</button>
               </div>
               <img src="assets/images/slider1.png" alt="Девушка за компьютером" width="749" height="500">
             </div>
@@ -54,7 +54,7 @@
                 <p class="slider-tag">акция</p>
                 <h2 class="slider-text-title">Нужен грамотный <span>копирайтер?</span></h2>
                 <p class="slider-text-description">Весь декабрь у нас действует акция на работу копирайтера.</p>
-                <button class="btn">Подробнее</button>
+                <button class="btn" (click)="openDialog('Копирайтинг')">Подробнее</button>
               </div>
               <img src="assets/images/slider2.png" alt="Девушка за компьютером">
             </div>
@@ -65,7 +65,7 @@
                 <p class="slider-tag">Новость дня</p>
                 <h2 class="slider-text-title"><span>6 место</span> в ТОП-10 SMM-агенств Москвы!</h2>
                 <p class="slider-text-description">Мы благодарим каждого, кто голосовал за нас!</p>
-                <button class="btn">Подробнее</button>
+                <button class="btn" (click)="openDialog('Реклама')">Подробнее</button>
               </div>
               <img src="assets/images/slider3.png" alt="Девушка за компьютером">
             </div>
@@ -88,7 +88,7 @@
           </div>
           <div class="card-extra">
             <div class="card-price">От 7500 ₽</div>
-            <div class="btn card-btn">Подробнее</div>
+            <div class="btn card-btn" (click)="openDialog('Создание сайтов')">Подробнее</div>
           </div>
         </li>
         <li class="services-card">
@@ -102,7 +102,7 @@
           </div>
           <div class="card-extra">
             <div class="card-price">От 3500 ₽</div>
-            <div class="btn card-btn">Подробнее</div>
+            <div class="btn card-btn" (click)="openDialog('Продвижение')">Подробнее</div>
           </div>
         </li>
         <li class="services-card">
@@ -116,7 +116,7 @@
           </div>
           <div class="card-extra">
             <div class="card-price">От 1000 ₽</div>
-            <div class="btn card-btn">Подробнее</div>
+            <div class="btn card-btn" (click)="openDialog('Реклама')">Подробнее</div>
           </div>
         </li>
         <li class="services-card">
@@ -130,7 +130,7 @@
           </div>
           <div class="card-extra">
             <div class="card-price">От 750 ₽</div>
-            <div class="btn card-btn">Подробнее</div>
+            <div class="btn card-btn" (click)="openDialog('Копирайтинг')">Подробнее</div>
           </div>
         </li>
       </ul>
@@ -343,3 +343,21 @@
     </section>
   </div>
 </main>
+
+<div class="services-dialog" id="services-dialog" (click)="closeDialog($event)">
+  <div class="dialog-container">
+    <div class="close-btn" (click)="closeDialog($event)">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <line x1="1.93562" y1="2.64999" x2="13.9564" y2="14.6708" stroke="#BEBEBE" stroke-linecap="round"/>
+        <line x1="13.9236" y1="2.62978" x2="1.90277" y2="14.6506" stroke="#BEBEBE" stroke-linecap="round"/>
+      </svg>
+    </div>
+    <h2 class="dialog-title">Заявка на услугу</h2>
+    <div class="dialog-content" [formGroup]="serviceForm">
+      <input type="text" placeholder="Услуга" formControlName="service">
+      <input type="text" placeholder="Ваше имя" formControlName="name">
+      <input type="phone" placeholder="Ваш номер телефона" formControlName="phone">
+    </div>
+    <button class="btn dialog-btn">Оставить заявку</button>
+  </div>
+</div>
