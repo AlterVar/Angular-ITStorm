@@ -1,6 +1,6 @@
 export type CallbackType = {
   name: string,
   phone: string,
-  service: string,
+  service?: string,
   type: string
 }
