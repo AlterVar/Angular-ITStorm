@@ -355,5 +355,49 @@
         }
       }
     }
+
+    .contacts {
+      display: flex;
+      align-items: start;
+      margin-bottom: 120px;
+
+      .contacts-text {
+        margin-left: 26px;
+        max-width: 500px;
+
+        .section-title {
+          margin-bottom: 20px;
+        }
+
+        .contacts-block {
+          margin-bottom: 20px;
+
+          .contacts-header {
+            font-weight: 500;
+            font-size: 20px;
+            color: $light-blue-text-color;
+            margin-bottom: 10px;
+          }
+
+          .contacts-description {
+            font-size: 14px;
+            line-height: 130%;
+            color: $dark-blue-text-color;
+          }
+
+          &.socials {
+            .socials-list {
+              display: flex;
+              align-items: center;
+              gap: 20px;
+
+              a {
+                text-decoration: none;
+              }
+            }
+          }
+        }
+      }
+    }
   }
 }
