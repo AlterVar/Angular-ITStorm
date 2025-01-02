@@ -17,6 +17,7 @@ export class MainComponent implements OnInit {
   popularArticles: ArticleType[] = [];
   dialogData: string = 'Услуга';
   dialog: HTMLElement | null = null;
+  dialogBtn: HTMLElement | null = null;
 
   customOptionsHero: OwlOptions = {
     loop: true,
@@ -59,7 +60,7 @@ export class MainComponent implements OnInit {
   }
 
   serviceForm = this.fb.group({
-    service: [{value: this.dialogData, disabled: true}],
+    service: [{value: '', disabled: true}],
     name: ['', Validators.required],
     phone: ['', Validators.required]
   })
@@ -70,11 +71,11 @@ export class MainComponent implements OnInit {
   constructor(private articleService: ArticlesService,
               private _snackBar: MatSnackBar,
               private fb: FormBuilder) {
-    this.dialog = document.getElementById('services-dialog');
   }
 
   ngOnInit(): void {
     this.dialog = document.getElementById('services-dialog');
+    this.dialogBtn = document.getElementById('dialog-btn');
     this.articleService.getPopularArticles()
       .subscribe({
         next: (data: DefaultResponseType | ArticleType[]) => {
@@ -99,6 +100,7 @@ export class MainComponent implements OnInit {
 
   openDialog(title: string) {
     this.dialogData = title;
+    this.serviceForm.get('service')?.setValue(title);
     if (this.dialog) {
       this.dialog.style.display = 'flex';
     }
@@ -106,7 +108,7 @@ export class MainComponent implements OnInit {
 
   closeDialog(event: Event) {
     event.stopPropagation();
-    if (this.dialog && event.target === this.dialog) {
+    if (this.dialog && (event.target === event.currentTarget || event.currentTarget === this.dialogBtn)) {
       this.dialog.style.display = 'none';
     }
   }
