@@ -113,6 +113,13 @@ export class MainComponent implements OnInit {
     event.stopPropagation();
     this.requestIsSent = false;
     if (this.dialog && (event.target === event.currentTarget || event.currentTarget === this.dialogBtn)) {
+      this.serviceForm.setValue({
+        service: '',
+        name: '',
+        phone: ''
+      })
+      this.serviceForm.markAsUntouched();
+      this.serviceForm.markAsPristine();
       this.dialog.style.display = 'none';
     }
   }

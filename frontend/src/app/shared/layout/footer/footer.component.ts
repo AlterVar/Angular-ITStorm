@@ -38,6 +38,12 @@ export class FooterComponent implements OnInit {
     event.stopPropagation();
     this.requestIsSent = false;
     if (this.dialog && (event.target === event.currentTarget || event.currentTarget === this.dialogBtn)) {
+      this.consultationForm.setValue({
+        name: '',
+        phone: ''
+      })
+      this.consultationForm.markAsUntouched();
+      this.consultationForm.markAsPristine();
       this.dialog.style.display = 'none';
     }
   }
