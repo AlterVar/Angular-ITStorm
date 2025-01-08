@@ -15,6 +15,7 @@ footer.footer {
         width: 85px;
         height: 47px;
         margin-right: 40px;
+        cursor: pointer;
       }
 
       .main-menu {
@@ -25,6 +26,7 @@ footer.footer {
           gap: 30px;
 
           .main-menu-item {
+            cursor: pointer;
             color: $dark-blue-text-color;
           }
         }

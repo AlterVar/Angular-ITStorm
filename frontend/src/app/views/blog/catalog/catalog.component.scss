@@ -40,80 +40,149 @@
           }
 
           svg {
+            cursor: pointer;
             margin-top: 3px;
           }
         }
       }
 
-      .sorting-select {
-        display: flex;
-        align-items: center;
+      .filters-select {
         margin-left: 25px;
-
-        .sorting-title {
-          font-weight: 400;
-          font-size: 16px;
-          width: 120px;
-          color: $dark-blue-text-color;
-          margin-right: 8px;
-        }
-      }
-    }
-
-    .articles {
-      display: grid;
-      grid-template-rows: repeat(2, auto);
-      grid-template-columns: repeat(4, 1fr);
-      align-items: start;
-      column-gap: 25px;
-      row-gap: 40px;
-      margin-bottom: 60px;
-
-      article {
-        height: 100%;
-      }
-    }
-
-    .pagination  {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 40px;
-      margin-bottom: 120px;
-
-      .pagination-arrow {
+        position: relative;
         cursor: pointer;
-        svg rect{
-          fill: url(#pattern0_16860_651);
-        }
 
-        &.disabled {
-          cursor: default;
-          svg rect{
-            fill: url(#pattern0_16860_639);
-          }
-        }
-      }
-
-      .pagination-pages {
-        display: flex;
-        align-items: center;
-        gap: 20px;
-
-        .page {
-          padding: 10px;
+        .filters-header {
           display: flex;
           align-items: center;
-          justify-content: center;
-          box-sizing: border-box;
-          cursor: pointer;
-          text-decoration: none;
-          color: $dark-blue-text-color;
-          font-size: 20px;
+          padding: 12px 23px;
+          border-top-right-radius: 5px;
+          border-top-left-radius: 5px;
 
-          &.active {
-            color: $light-blue-text-color;
+          .filters-title {
+            font-weight: 400;
+            font-size: 16px;
+            width: 120px;
+            color: $dark-blue-text-color;
+            margin-right: 8px;
           }
+
+          svg {
+            transition: all 0.4s;
+          }
+        }
+
+        &.active {
+          .filters-header {
+            background-color: #b9d5fd;
+
+            svg {
+              rotate: 180deg;
+            }
+          }
+        }
+
+        .filters-body {
+          position: absolute;
+          top: 45px;
+          left: 0;
+          z-index: 200;
+          background-color: #fff;
+          border: 2px solid #b9d5fd;
+          border-bottom-right-radius: 5px;
+          border-bottom-left-radius: 5px;
+          padding: 10px 21px;
+          box-sizing: border-box;
+          width: 100%;
+          display: flex;
+          flex-direction: column;
+          justify-content: space-between;
+
+          .filter-item {
+            cursor: pointer;
+            .filter-name {
+              display: flex;
+              justify-content: space-between;
+              align-items: center;
+              color: #bebebe;
+
+              &::after {
+                content: "+";
+                font-size: 24px;
+                color: #bebebe;
+              }
+            }
+
+            &.active {
+              .filter-name {
+                color: $dark-blue-text-color;
+
+                &::after {
+                  content: "-";
+                  color: $dark-blue-text-color;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .articles {
+    display: grid;
+    grid-template-rows: repeat(2, auto);
+    grid-template-columns: repeat(4, 1fr);
+    align-items: start;
+    column-gap: 25px;
+    row-gap: 40px;
+    margin-bottom: 60px;
+
+    article {
+      height: 100%;
+    }
+  }
+
+  .pagination {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 40px;
+    margin-bottom: 120px;
+
+    .pagination-arrow {
+      cursor: pointer;
+
+      svg rect {
+        fill: url(#pattern0_16860_651);
+      }
+
+      &.disabled {
+        cursor: default;
+
+        svg rect {
+          fill: url(#pattern0_16860_639);
+        }
+      }
+    }
+
+    .pagination-pages {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+
+      .page {
+        padding: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-sizing: border-box;
+        cursor: pointer;
+        text-decoration: none;
+        color: $dark-blue-text-color;
+        font-size: 20px;
+
+        &.active {
+          color: $light-blue-text-color;
         }
       }
     }

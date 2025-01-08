@@ -11,6 +11,7 @@ header.header {
     padding: 40px 100px;
 
     .logo {
+      cursor: pointer;
       width: 85px;
       height: 47px;
     }
@@ -23,6 +24,7 @@ header.header {
         gap: 30px;
 
         .main-menu-item {
+          cursor: pointer;
           color: $dark-blue-text-color;
         }
       }
