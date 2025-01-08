@@ -80,10 +80,40 @@
       gap: 40px;
       margin-bottom: 120px;
 
+      .pagination-arrow {
+        cursor: pointer;
+        svg rect{
+          fill: url(#pattern0_16860_651);
+        }
+
+        &.disabled {
+          cursor: default;
+          svg rect{
+            fill: url(#pattern0_16860_639);
+          }
+        }
+      }
+
       .pagination-pages {
         display: flex;
         align-items: center;
         gap: 20px;
+
+        .page {
+          padding: 10px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          box-sizing: border-box;
+          cursor: pointer;
+          text-decoration: none;
+          color: $dark-blue-text-color;
+          font-size: 20px;
+
+          &.active {
+            color: $light-blue-text-color;
+          }
+        }
       }
     }
   }

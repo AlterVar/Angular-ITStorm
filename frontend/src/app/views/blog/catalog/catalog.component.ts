@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {ArticlesService} from "../../../shared/services/articles.service";
 import {ArticleType} from "../../../../types/article.type";
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {debounceTime} from "rxjs";
 import {ActiveParamsUtil} from "../../../shared/utils/active-params.util";
 import {ActiveParamsType} from "../../../../types/active-params.type";
@@ -23,7 +23,8 @@ export class CatalogComponent implements OnInit {
 
   constructor(private articleService: ArticlesService,
               private activatedRoute: ActivatedRoute,
-              private categoriesService: CategoriesService) {
+              private categoriesService: CategoriesService,
+              private router: Router) {
   }
 
   ngOnInit(): void {
@@ -64,16 +65,27 @@ export class CatalogComponent implements OnInit {
   }
 
   openPrevPage() {
-    if (this.activeParams.page) {
-
+    if (this.activeParams.page && this.activeParams.page > 1) {
+      this.activeParams.page--;
+      this.router.navigate(['/blog'], {
+        queryParams: this.activeParams
+      })
     }
   }
 
   openNextPage() {
-
+    if (this.activeParams.page && this.activeParams.page < this.pages.length) {
+      this.activeParams.page++;
+      this.router.navigate(['/blog'], {
+        queryParams: this.activeParams
+      })
+    }
   }
 
   openPage(page: number) {
-
+    this.activeParams.page = page;
+    this.router.navigate(['/blog'], {
+      queryParams: this.activeParams
+    })
   }
 }
