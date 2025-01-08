@@ -19,8 +19,7 @@ export class ArticlesService {
     return this.http.get<DefaultResponseType | ArticleType[]>(environment.api + 'articles/top');
   }
 
-  //TODO: parameters-type
-  getAllArticles(params: any): Observable<ArticlesResponseType> {
+  getArticlesWithFilters(params: any): Observable<ArticlesResponseType> {
     return this.http.get<ArticlesResponseType>(environment.api + 'articles', {
       params: params,
     });
