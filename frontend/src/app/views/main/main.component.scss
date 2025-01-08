@@ -275,10 +275,15 @@
         margin-bottom: 40px;
       }
       .popular-articles-list {
-        display: flex;
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
         align-items: start;
         gap: 25px;
         margin-bottom: 40px;
+
+        article {
+          height: 100%;
+        }
       }
       .blog-link {
         display: flex;
