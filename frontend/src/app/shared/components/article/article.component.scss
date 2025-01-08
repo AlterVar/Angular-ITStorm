@@ -4,9 +4,11 @@
 .article {
   position: relative;
   display: grid;
+  align-items: start;
+  grid-template-rows: max-content;
   box-sizing: border-box;
-  //TODO: исправить баг при добавлении большого количества текста в карточку
-  height: 571px;
+  height: 100%;
+  max-width: 292px;
 
   .article-picture {
     width: 291px;
@@ -42,6 +44,7 @@
     color: $description-color;
     line-height: 130%;
     margin-bottom: 20px;
+
   }
 
   .article-extra {

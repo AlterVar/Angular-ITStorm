@@ -17,6 +17,7 @@ import { ArticleComponent } from './shared/components/article/article.component'
 import {MatDialogModule} from "@angular/material/dialog";
 import {MatButtonModule} from "@angular/material/button";
 import {ReactiveFormsModule} from "@angular/forms";
+import { CatalogComponent } from './views/blog/catalog/catalog.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,7 @@ import {ReactiveFormsModule} from "@angular/forms";
     LayoutComponent,
     HeaderComponent,
     FooterComponent,
-    MainComponent
+    MainComponent,
   ],
   imports: [
     BrowserModule,
