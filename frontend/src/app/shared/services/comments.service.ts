@@ -28,4 +28,8 @@ export class CommentsService {
       action: action
     })
   }
+
+  getActionsForComment(commentId: string): Observable<{ comment: string, action: string }[]> {
+    return this.http.get<{ comment: string, action: string }[]>(environment.api + 'comments/' + commentId + '/actions');
+  }
 }
