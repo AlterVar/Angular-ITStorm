@@ -9,7 +9,6 @@ import {AuthService} from "../../../core/auth.service";
 import {CommentsService} from "../../../shared/services/comments.service";
 import {DefaultResponseType} from "../../../../types/default-response.type";
 import {MatSnackBar} from "@angular/material/snack-bar";
-import {formatDate} from "@angular/common";
 
 @Component({
   selector: 'app-article',
@@ -51,11 +50,7 @@ export class ArticleComponent implements OnInit {
                 }
                 const comments = data as {allCount: number, comments: CommentType[]};
                 if (comments) {
-                  this.comments = comments.comments.map(item => {
-                    let formattedDate = new Date(item.date);
-                    item.date = formatDate(formattedDate, 'mm.dd.yyyy, HH:mm','en-US');
-                    return item;
-                  })
+                  this.comments = comments.comments
                 }
               })
           });
@@ -65,17 +60,5 @@ export class ArticleComponent implements OnInit {
             this.relatedArticles = data;
           })
       })
-  }
-
-  addLike() {
-
-  }
-
-  addDislike() {
-
-  }
-
-  sendSpamMessage() {
-
   }
 }

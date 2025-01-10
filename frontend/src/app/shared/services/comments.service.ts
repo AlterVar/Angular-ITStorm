@@ -22,4 +22,10 @@ export class CommentsService {
       params: params
     });
   }
+
+  applyAction(action: string, commentId: string): Observable<DefaultResponseType> {
+    return this.http.post<DefaultResponseType>(environment.api + 'comments/' + commentId + '/apply-action', {
+      action: action
+    })
+  }
 }
