@@ -5,6 +5,11 @@ import {ArticleType} from "../../../../types/article.type";
 import {environment} from "../../../../environments/environment";
 import {CommentType} from "../../../../types/comment.type";
 import {DomSanitizer} from "@angular/platform-browser";
+import {AuthService} from "../../../core/auth.service";
+import {CommentsService} from "../../../shared/services/comments.service";
+import {DefaultResponseType} from "../../../../types/default-response.type";
+import {MatSnackBar} from "@angular/material/snack-bar";
+import {formatDate} from "@angular/common";
 
 @Component({
   selector: 'app-article',
@@ -16,13 +21,20 @@ export class ArticleComponent implements OnInit {
   article: ArticleType | null = null;
   relatedArticles: ArticleType[] = [];
   comments: CommentType[] = [];
+  isLogged: boolean = false;
+  numberOfComments: number = 3;
 
   constructor(private articlesService: ArticlesService,
               private activatedRoute: ActivatedRoute,
+              private authService: AuthService,
+              private commentsService: CommentsService,
               protected sanitizer: DomSanitizer,
+              private _snackBar: MatSnackBar,
               private router: Router) { }
 
   ngOnInit(): void {
+    //TODO: разгрузить, слишком долгая загрузка
+    this.isLogged = this.authService.getIsLoggedIn();
     this.activatedRoute.params
       .subscribe(params => {
         this.articlesService.getArticle(params['url'])
@@ -30,8 +42,22 @@ export class ArticleComponent implements OnInit {
             this.article = data;
             if (data.comments && data.text) {
               this.sanitizer.bypassSecurityTrustHtml(data.text);
-              this.comments = data.comments;
             }
+
+            this.commentsService.getComments({offset: this.numberOfComments, article: this.article?.id})
+              .subscribe((data: DefaultResponseType | {allCount: number, comments: CommentType[]}) => {
+                if (data as DefaultResponseType && (data as DefaultResponseType).error) {
+                  console.log((data as DefaultResponseType).message);
+                }
+                const comments = data as {allCount: number, comments: CommentType[]};
+                if (comments) {
+                  this.comments = comments.comments.map(item => {
+                    let formattedDate = new Date(item.date);
+                    item.date = formatDate(formattedDate, 'mm.dd.yyyy, HH:mm','en-US');
+                    return item;
+                  })
+                }
+              })
           });
 
         this.articlesService.getRelatedArticles(params['url'])
@@ -39,5 +65,17 @@ export class ArticleComponent implements OnInit {
             this.relatedArticles = data;
           })
       })
+  }
+
+  addLike() {
+
+  }
+
+  addDislike() {
+
+  }
+
+  sendSpamMessage() {
+
   }
 }
