@@ -19,9 +19,17 @@ export class ArticlesService {
     return this.http.get<DefaultResponseType | ArticleType[]>(environment.api + 'articles/top');
   }
 
+  getRelatedArticles(url: string): Observable<ArticleType[]> {
+    return this.http.get<ArticleType[]>(environment.api + 'articles/related/' + url);
+  }
+
   getArticlesWithFilters(params: any): Observable<ArticlesResponseType> {
     return this.http.get<ArticlesResponseType>(environment.api + 'articles', {
       params: params,
     });
+  }
+
+  getArticle(url: string): Observable<ArticleType> {
+    return this.http.get<ArticleType>(environment.api + 'articles/' + url);
   }
 }

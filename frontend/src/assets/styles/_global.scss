@@ -134,3 +134,27 @@ input:not([type='checkbox']) {
     }
   }
 }
+
+.article {
+  .main {
+    .main-text {
+      max-width: 818px;
+      p {
+        line-height: 130%;
+        color: $description-color;
+        margin-bottom: 20px;
+      }
+
+      h1, h3 {
+        font-size: 20px;
+        color: $light-blue-text-color;
+        margin-bottom: 20px;
+        margin-top: 40px;
+      }
+
+      h1 {
+        font-size: 26px;
+      }
+    }
+  }
+}
