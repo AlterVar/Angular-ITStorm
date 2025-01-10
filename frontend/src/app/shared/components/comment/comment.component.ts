@@ -34,14 +34,16 @@ export class CommentComponent implements OnInit {
     this.commentsService.getActionsForComment(this.comment!.id)
       .subscribe((data: { comment: string, action: string }[]) => {
         const actions = data as { comment: string, action: string }[];
-        this.commentAction = actions[0].action;
-        if (this.commentAction) {
-          if (this.commentAction === 'like') {
-            this.like = true;
-            this.dislike = false;
-          } else {
-            this.dislike = true;
-            this.like = false;
+        if (actions.length > 0) {
+          this.commentAction = actions[0].action;
+          if (this.commentAction) {
+            if (this.commentAction === 'like') {
+              this.like = true;
+              this.dislike = false;
+            } else {
+              this.dislike = true;
+              this.like = false;
+            }
           }
         }
       })
@@ -84,7 +86,7 @@ export class CommentComponent implements OnInit {
   }
 
   addLike() {
-    if (this.comment && this.comment.dislikesCount > 0) {
+    if (this.comment && this.comment.dislikesCount > 0 && this.commentAction === 'dislike') {
       this.comment.dislikesCount--;
     }
     this.comment!.likesCount++;
@@ -93,7 +95,7 @@ export class CommentComponent implements OnInit {
   }
 
   addDislike() {
-    if (this.comment && this.comment.likesCount > 0) {
+    if (this.comment && this.comment.likesCount > 0 && this.commentAction === 'like') {
       this.comment.likesCount--;
     }
     this.comment!.dislikesCount++;
