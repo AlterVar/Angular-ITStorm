@@ -42,7 +42,7 @@ class CommentController {
             .populate('user')
             .sort({date: -1});
 
-        let slicedComments = comments.slice(parseInt(offset), parseInt(offset) + loadCount);
+        let slicedComments = comments.slice([parseInt(offset), parseInt(offset) + loadCount]);
 
         return res.json({
             allCount: comments.length,
