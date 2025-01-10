@@ -13,21 +13,38 @@ import {AuthService} from "../../../core/auth.service";
 })
 export class CommentComponent implements OnInit {
   @Input() comment: CommentType | null = null;
-  countLikes: number = 0;
-  countDislikes: number = 0;
+  like: boolean = false;
+  dislike: boolean = false;
+  commentAction: string = '';
 
   constructor(private commentsService: CommentsService,
               private authService: AuthService,
-              private _snackBar: MatSnackBar) { }
+              private _snackBar: MatSnackBar) {
+  }
 
   ngOnInit(): void {
     if (this.comment) {
       let formattedDate = new Date(this.comment.date);
-      this.comment.date = formatDate(formattedDate, 'mm.dd.yyyy, HH:mm','en-US');
-
-      this.countLikes = this.comment.likesCount;
-      this.countDislikes = this.comment.dislikesCount;
+      this.comment.date = formatDate(formattedDate, 'mm.dd.yyyy, HH:mm', 'en-US');
+      this.updateAction();
     }
+  }
+
+  updateAction() {
+    this.commentsService.getActionsForComment(this.comment!.id)
+      .subscribe((data: { comment: string, action: string }[]) => {
+        const actions = data as { comment: string, action: string }[];
+        this.commentAction = actions[0].action;
+        if (this.commentAction) {
+          if (this.commentAction === 'like') {
+            this.like = true;
+            this.dislike = false;
+          } else {
+            this.dislike = true;
+            this.like = false;
+          }
+        }
+      })
   }
 
   sendAction(action: string, id: string) {
@@ -45,6 +62,7 @@ export class CommentComponent implements OnInit {
                 this._snackBar.open('Жалоба была успешно отправлена')
               }
             }
+            this.updateAction();
           },
           error: err => {
             this._snackBar.open('Жалоба уже была отправлена');
@@ -54,28 +72,32 @@ export class CommentComponent implements OnInit {
   }
 
   updateReactions(action: string, id: string) {
-    if (this.comment) {
-      this.commentsService.getActionsForComment(this.comment?.id)
-        .subscribe(data => {
-          if (data.length === 0 || (data.length > 0 && data[0].action !== action)) {
-            action === 'like' ? this.addLike() : this.addDislike();
-            this.sendAction(action, id);
-          }
-        })
+    if (!this.authService.getIsLoggedIn()) {
+      this._snackBar.open('Чтобы оставлять реакции, необходимо авторизоваться');
+      return;
+    }
+
+    if (!this.commentAction || this.commentAction !== action) {
+      action === 'like' ? this.addLike() : this.addDislike();
+      this.sendAction(action, id);
     }
   }
 
   addLike() {
-    if (this.countDislikes > 0) {
-      this.countDislikes--;
+    if (this.comment && this.comment.dislikesCount > 0) {
+      this.comment.dislikesCount--;
     }
-    this.countLikes++;
+    this.comment!.likesCount++;
+    this.like = true;
+    this.dislike = false;
   }
 
   addDislike() {
-    if (this.countLikes > 0) {
-      this.countLikes--;
+    if (this.comment && this.comment.likesCount > 0) {
+      this.comment.likesCount--;
     }
-    this.countDislikes++;
+    this.comment!.dislikesCount++;
+    this.like = false;
+    this.dislike = true;
   }
 }

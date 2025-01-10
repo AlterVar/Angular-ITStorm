@@ -28,11 +28,9 @@ export class ArticleComponent implements OnInit {
               private authService: AuthService,
               private commentsService: CommentsService,
               protected sanitizer: DomSanitizer,
-              private _snackBar: MatSnackBar,
-              private router: Router) { }
+              private _snackBar: MatSnackBar) { }
 
   ngOnInit(): void {
-    //TODO: разгрузить, слишком долгая загрузка
     this.isLogged = this.authService.getIsLoggedIn();
     this.activatedRoute.params
       .subscribe(params => {
