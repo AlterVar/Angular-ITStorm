@@ -21,8 +21,9 @@ export class ArticleComponent implements OnInit {
   relatedArticles: ArticleType[] = [];
   comments: CommentType[] = [];
   isLogged: boolean = false;
-  showAll: boolean = true;
+  shownAll: boolean = false;
   offset: number = 0;
+  shownComments: number = 3;
   commentsCount: number = 0;
   newCommentText: string = '';
 
@@ -42,12 +43,13 @@ export class ArticleComponent implements OnInit {
             this.article = data;
             if (data.comments && data.commentsCount) {
               this.commentsCount = data.commentsCount;
-              this.offset = (this.commentsCount - 3) > 0 ? (this.commentsCount - 3) : 0;
+              this.shownComments = data.commentsCount < 3 ? data.commentsCount : 3;
+              this.offset = (-10 + -(this.commentsCount - 3)) < -10 ? (-10 + -(this.commentsCount - 3)) : 0;
             }
 
             if (data.comments && data.text) {
               this.sanitizer.bypassSecurityTrustHtml(data.text);
-              this.getComments();
+              this.getComments(this.offset);
             }
           });
 
@@ -58,18 +60,21 @@ export class ArticleComponent implements OnInit {
       })
   }
 
-  getComments() {
-    this.commentsService.getComments({offset: this.offset, article: this.article?.id})
+  getComments(offset: number = this.shownComments) {
+    this.commentsService.getComments({offset: offset, article: this.article?.id})
       .subscribe((data: DefaultResponseType | {allCount: number, comments: CommentType[]}) => {
         if (data as DefaultResponseType && (data as DefaultResponseType).error) {
           console.log((data as DefaultResponseType).message);
         }
         const comments = data as {allCount: number, comments: CommentType[]};
-        if (comments) {
+        if (comments && comments.comments.length > 3) {
+          this.comments = [...this.comments, ...comments.comments];
+        } else {
+          this.shownComments = 3;
           this.comments = comments.comments;
-          this.commentsCount = comments.allCount;
-          this.offset = this.commentsCount - 3;
         }
+        this.commentsCount = comments.allCount;
+        this.offset = (-10 + -(this.commentsCount - 3));
       })
   }
 
@@ -79,18 +84,22 @@ export class ArticleComponent implements OnInit {
         .subscribe((data: DefaultResponseType) => {
           this.newCommentText = '';
           this.commentsCount++;
-          this.offset = (this.commentsCount - 3) > 0 ? (this.commentsCount - 3) : 0;
-          this.getComments();
+          this.offset = (-10 + -(this.commentsCount - 3)) < -10 ? (-10 + -(this.commentsCount - 3)) : 0;
+          this.getComments(this.offset);
           this._snackBar.open(data.message);
         })
     }
   }
 
-  showComments() {
-    this.showAll = !this.showAll;
-    if (!this.showAll) {
-      this.offset = 0;
-    }
+  showTenMoreComments() {
     this.getComments();
+    this.shownComments += 10;
+    this.shownAll = this.commentsCount <= this.shownComments;
+  }
+
+  hideMostComments() {
+    this.getComments(this.offset);
+    this.shownComments = 3;
+    this.shownAll = false;
   }
 }
