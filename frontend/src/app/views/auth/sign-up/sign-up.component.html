@@ -7,12 +7,24 @@
                formControlName="name"
                [ngStyle]="{'border-color': signupForm.get('name')?.invalid
                  && (signupForm.get('name')?.dirty || signupForm.get('name')?.touched) ? 'red' : ''}">
+        <div class="error-message" *ngIf="signupForm.get('name')?.invalid
+        && (signupForm.get('name')?.dirty || signupForm.get('name')?.touched)">
+          Имя должно содержать только русские буквы и начинаться с заглавной буквы буквы
+        </div>
         <input type="email" placeholder="Электронная почта" formControlName="email"
                [ngStyle]="{'border-color': signupForm.get('email')?.invalid
                  && (signupForm.get('email')?.dirty || signupForm.get('email')?.touched) ? 'red' : ''}">
+        <div class="error-message" *ngIf="signupForm.get('email')?.invalid
+        && (signupForm.get('email')?.dirty || signupForm.get('email')?.touched)">
+          Проверьте адрес электронной почты
+        </div>
         <input type="password" placeholder="Пароль" formControlName="password"
                [ngStyle]="{'border-color': signupForm.get('password')?.invalid
                  && (signupForm.get('password')?.dirty || signupForm.get('password')?.touched) ? 'red' : ''}">
+        <div class="error-message" *ngIf="signupForm.get('password')?.invalid
+        && (signupForm.get('password')?.dirty || signupForm.get('password')?.touched)">
+          Пароль должен быть не менее 8 символов и содержать 1 заглавную букву и 1 цифру
+        </div>
 
         <div class="agreement">
           <input type="checkbox" id="signup-checkbox" formControlName="agree">

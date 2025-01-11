@@ -358,11 +358,20 @@
         <input type="text" placeholder="Ваше имя" formControlName="name"
                [ngStyle]="{'border-color': serviceForm.get('name')?.invalid
                && (serviceForm.get('name')?.dirty || serviceForm.get('name')?.touched) ? 'red' : ''}">
+        <div class="error-message" *ngIf="serviceForm.get('name')?.invalid
+               && (serviceForm.get('name')?.dirty || serviceForm.get('name')?.touched)">
+          Заполните ваше имя
+        </div>
         <input type="text" placeholder="Ваш номер телефона" formControlName="phone"
                [ngStyle]="{'border-color': serviceForm.get('phone')?.invalid
                && (serviceForm.get('phone')?.dirty || serviceForm.get('phone')?.touched) ? 'red' : ''}">
+        <div class="error-message" *ngIf="serviceForm.get('phone')?.invalid
+               && (serviceForm.get('phone')?.dirty || serviceForm.get('phone')?.touched)">
+          Заполните ваш номер
+        </div>
       </div>
       <button class="btn dialog-btn" [disabled]="!serviceForm.valid" (click)="sendCallbackRequest()">Оставить заявку</button>
+      <div class="error-message" *ngIf="!responseIsOk">Произошла ошибка при отправке формы, попробуйте еще раз</div>
     </div>
     <div class="dialog-option" *ngIf="requestIsSent">
       <h2 class="dialog-title">Спасибо за вашу заявку!</h2>

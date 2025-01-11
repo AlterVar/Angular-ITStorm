@@ -75,9 +75,17 @@
         <input type="text" placeholder="Ваше имя" formControlName="name"
                [ngStyle]="{'border-color': consultationForm.get('name')?.invalid
                && (consultationForm.get('name')?.dirty || consultationForm.get('name')?.touched) ? 'red' : ''}">
+        <div class="error-message" *ngIf="consultationForm.get('name')?.invalid
+               && (consultationForm.get('name')?.dirty || consultationForm.get('name')?.touched)">
+          Заполните ваше имя
+        </div>
         <input type="text" placeholder="Ваш номер телефона" formControlName="phone"
                [ngStyle]="{'border-color': consultationForm.get('phone')?.invalid
                && (consultationForm.get('phone')?.dirty || consultationForm.get('phone')?.touched) ? 'red' : ''}">
+        <div class="error-message" *ngIf="consultationForm.get('phone')?.invalid
+               && (consultationForm.get('phone')?.dirty || consultationForm.get('phone')?.touched)">
+          Заполните ваш номер
+        </div>
       </div>
       <button class="btn dialog-btn" [disabled]="!consultationForm.valid" (click)="sendCallbackRequest()">Оставить заявку</button>
     </div>
@@ -87,6 +95,7 @@
         Мы свяжемся с вами при первой же возможности.
       </p>
       <button class="btn dialog-confirm-btn" (click)="closeDialog($event)">Окей</button>
+      <div class="error-message" *ngIf="!responseIsOk">Произошла ошибка при отправке формы, попробуйте еще раз</div>
     </div>
   </div>
 </div>

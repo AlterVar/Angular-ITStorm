@@ -19,6 +19,7 @@ export class MainComponent implements OnInit {
   dialogData: string = 'Услуга';
   dialogOpen: boolean = false;
   requestIsSent: boolean = false;
+  responseIsOk: boolean = true;
   dialogBtn: HTMLElement | null = null;
 
   customOptionsHero: OwlOptions = {
@@ -123,6 +124,7 @@ export class MainComponent implements OnInit {
 
   //TODO: возможно использовать таки AngularMaterials
   sendCallbackRequest() {
+    this.responseIsOk = true;
     if (this.serviceForm.value.name && this.serviceForm.value.phone && this.serviceForm.controls.service.value) {
       this.callbackService.sendCallbackRequest({
         name: this.serviceForm.value.name,
@@ -130,12 +132,15 @@ export class MainComponent implements OnInit {
         service: this.serviceForm.controls.service.value,
         type: "order"
       })
-        .subscribe((data: DefaultResponseType) => {
-          if (data.error) {
-            this._snackBar.open('Не удалось отправить запрос. Пожалуйста, обратитесь в службу поддержки');
-            console.log(data.message);
+        .subscribe({
+          next: () => {
+            this.responseIsOk = true;
+            this.requestIsSent = true;
+          },
+          error: () => {
+            this.responseIsOk = false;
+            this.requestIsSent = false;
           }
-          this.requestIsSent = true;
         })
     }
   }

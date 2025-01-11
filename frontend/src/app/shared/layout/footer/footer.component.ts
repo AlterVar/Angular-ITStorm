@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {DefaultResponseType} from "../../../../types/default-response.type";
 import {FormBuilder, Validators} from "@angular/forms";
 import {MatSnackBar} from "@angular/material/snack-bar";
@@ -13,6 +13,7 @@ export class FooterComponent implements OnInit {
   consultationOpen: boolean = false;
   dialogBtn: HTMLElement | null = null;
   requestIsSent: boolean = false;
+  responseIsOk: boolean = true;
 
   consultationForm = this.fb.group({
     name: ['', Validators.required],
@@ -21,7 +22,8 @@ export class FooterComponent implements OnInit {
 
   constructor(private _snackBar: MatSnackBar,
               private callbackService: CallbackService,
-              private fb: FormBuilder) { }
+              private fb: FormBuilder) {
+  }
 
   ngOnInit(): void {
     this.dialogBtn = document.getElementById('consultation-btn');
@@ -47,18 +49,22 @@ export class FooterComponent implements OnInit {
 
   //TODO: возможно использовать таки AngularMaterials или для попапа отдельный компонент использовать
   sendCallbackRequest() {
+    this.responseIsOk = true;
     if (this.consultationForm.value.name && this.consultationForm.value.phone) {
       this.callbackService.sendCallbackRequest({
         name: this.consultationForm.value.name,
         phone: this.consultationForm.value.phone,
         type: "consultation"
       })
-        .subscribe((data: DefaultResponseType) => {
-          if (data.error) {
-            this._snackBar.open('Не удалось отправить запрос. Пожалуйста, обратитесь в службу поддержки');
-            console.log(data.message);
+        .subscribe({
+          next: () => {
+            this.responseIsOk = true;
+            this.requestIsSent = true;
+          },
+          error: () => {
+            this.responseIsOk = false;
+            this.requestIsSent = false;
           }
-          this.requestIsSent = true;
         })
     }
   }

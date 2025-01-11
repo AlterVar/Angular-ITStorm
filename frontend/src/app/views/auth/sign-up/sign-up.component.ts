@@ -17,9 +17,9 @@ export class SignUpComponent implements OnInit {
   serverStaticPath = environment.serverStaticPath;
 
   signupForm = this.fb.group({
-    name: ['', [Validators.required]],
+    name: ['', [Validators.required, Validators.pattern(/^(([А-Я][а-я]+)+\s?){1,3}$/)]],
     email: ['', [Validators.email, Validators.required]],
-    password: ['', [Validators.required, Validators.pattern(/^[0-9a-zA-Z]{8,}$/)]],
+    password: ['', [Validators.required, Validators.pattern(/^(?=.*[0-9])(?=.*[A-Z])[0-9a-zA-Z!@#$%^&*]{8,}$/)]],
     agree: [false, Validators.requiredTrue]
   })
 

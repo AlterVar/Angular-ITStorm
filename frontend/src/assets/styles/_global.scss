@@ -33,6 +33,10 @@ a, label {
   box-sizing: border-box;
   border-radius: 5px;
   cursor: pointer;
+
+  &:disabled {
+    background-color: rgba(112, 159, 220, 0.4);
+  }
 }
 
 input:not([type='checkbox']) {
@@ -44,6 +48,11 @@ input:not([type='checkbox']) {
   height: 53px;
   box-sizing: border-box;
   padding: 20px;
+}
+
+.error-message {
+  color: red;
+  line-height: 130%;
 }
 
 .services-dialog, .consultation-dialog {
@@ -98,7 +107,6 @@ input:not([type='checkbox']) {
     .dialog-content {
       display: flex;
       flex-direction: column;
-      align-items: center;
       gap: 5px;
       margin-bottom: 20px;
 
@@ -119,10 +127,20 @@ input:not([type='checkbox']) {
           font-size: 14px;
         }
       }
+
+      .error-message {
+        text-align: left;
+        font-size: 14px;
+        font-family: "Montserrat", sans-serif;
+      }
     }
     .dialog-btn {
       width: 422px;
       height: 51px;
+    }
+
+    .error-message {
+      margin-top: 5px;
     }
 
     .dialog-description {
@@ -132,6 +150,7 @@ input:not([type='checkbox']) {
     }
 
     .dialog-confirm-btn {
+      font-size: 12px;
       width: 73px;
       height: 36px;
     }
