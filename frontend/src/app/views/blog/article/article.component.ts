@@ -21,7 +21,9 @@ export class ArticleComponent implements OnInit {
   relatedArticles: ArticleType[] = [];
   comments: CommentType[] = [];
   isLogged: boolean = false;
-  numberOfComments: number = 3;
+  showAll: boolean = true;
+  offset: number = 0;
+  commentsCount: number = 0;
   newCommentText: string = '';
 
   constructor(private articlesService: ArticlesService,
@@ -32,7 +34,6 @@ export class ArticleComponent implements OnInit {
               private _snackBar: MatSnackBar) { }
 
   ngOnInit(): void {
-    this.numberOfComments = 0;
     this.isLogged = this.authService.getIsLoggedIn();
     this.activatedRoute.params
       .subscribe(params => {
@@ -40,7 +41,8 @@ export class ArticleComponent implements OnInit {
           .subscribe((data:ArticleType) => {
             this.article = data;
             if (data.comments && data.commentsCount) {
-              this.numberOfComments = +(data.commentsCount) - 3;
+              this.commentsCount = data.commentsCount;
+              this.offset = (this.commentsCount - 3) > 0 ? (this.commentsCount - 3) : 0;
             }
 
             if (data.comments && data.text) {
@@ -57,7 +59,7 @@ export class ArticleComponent implements OnInit {
   }
 
   getComments() {
-    this.commentsService.getComments({offset: this.numberOfComments, article: this.article?.id})
+    this.commentsService.getComments({offset: this.offset, article: this.article?.id})
       .subscribe((data: DefaultResponseType | {allCount: number, comments: CommentType[]}) => {
         if (data as DefaultResponseType && (data as DefaultResponseType).error) {
           console.log((data as DefaultResponseType).message);
@@ -65,6 +67,8 @@ export class ArticleComponent implements OnInit {
         const comments = data as {allCount: number, comments: CommentType[]};
         if (comments) {
           this.comments = comments.comments;
+          this.commentsCount = comments.allCount;
+          this.offset = this.commentsCount - 3;
         }
       })
   }
@@ -73,21 +77,20 @@ export class ArticleComponent implements OnInit {
     if (this.newCommentText) {
       this.commentsService.sendComment(this.newCommentText, this.article!.id)
         .subscribe((data: DefaultResponseType) => {
+          this.newCommentText = '';
+          this.commentsCount++;
+          this.offset = (this.commentsCount - 3) > 0 ? (this.commentsCount - 3) : 0;
           this.getComments();
           this._snackBar.open(data.message);
         })
     }
   }
 
-  showAllComments() {
-    this.numberOfComments = 0;
-    this.getComments();
-  }
-
-  showLessComments() {
-    if (this.article && this.article.commentsCount) {
-      this.numberOfComments = this.article.commentsCount - 3;
-      this.getComments();
+  showComments() {
+    this.showAll = !this.showAll;
+    if (!this.showAll) {
+      this.offset = 0;
     }
+    this.getComments();
   }
 }
