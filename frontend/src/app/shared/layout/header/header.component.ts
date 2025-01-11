@@ -14,6 +14,7 @@ import {Router} from "@angular/router";
 export class HeaderComponent implements OnInit {
   isLogged: boolean = false;
   userInfo: UserType | null = null;
+  logoutMenuOpen: boolean = false;
 
   constructor(private authService: AuthService,
               private userService: UserService,
@@ -46,6 +47,11 @@ export class HeaderComponent implements OnInit {
           this.userInfo = userResponse;
         }
       })
+    this.logoutMenuOpen = false;
+  }
+
+  openMenu() {
+    this.logoutMenuOpen = !this.logoutMenuOpen;
   }
 
   logout() {
@@ -62,5 +68,7 @@ export class HeaderComponent implements OnInit {
           this.router.navigate(['/']);
         }
       })
+
+    this.logoutMenuOpen = !this.logoutMenuOpen;
   }
 }

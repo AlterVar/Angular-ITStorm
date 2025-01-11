@@ -10,17 +10,21 @@ header.header {
     justify-content: space-between;
     padding: 40px 100px;
 
-    .logo {
-      cursor: pointer;
-      width: 85px;
-      height: 47px;
-    }
-
     .main-menu {
+      display: flex;
+      align-items: center;
+
+      .logo {
+        cursor: pointer;
+        width: 85px;
+        height: 47px;
+      }
+
       .main-menu-list {
         list-style: none;
         display: flex;
         align-items: center;
+        margin-left: 100px;
         gap: 30px;
 
         .main-menu-item {
@@ -30,24 +34,69 @@ header.header {
       }
     }
 
-    .header-phone a {
-      text-decoration: none;
-      color: $light-blue-text-color;
-    }
-
-    .profile {
+    .additional-nav {
       display: flex;
-      justify-content: center;
       align-items: center;
+      justify-content: space-between;
+      width: 420px;
 
-      .profile-image {
-        margin-right: 7px;
+      .header-phone {
+        a {
+          text-decoration: none;
+          color: $light-blue-text-color;
+        }
       }
 
-      .profile-text a,
-      .profile-text button{
-        text-decoration: none;
-        color: $dark-blue-text-color;
+      .profile {
+        display: flex;
+        justify-content: end;
+        align-items: center;
+        width: 50%;
+
+        .profile-image {
+          margin-right: 2px;
+        }
+
+        .profile-text {
+          position: relative;
+          padding: 10px 5px;
+          cursor: pointer;
+          line-height: 130%;
+
+          a {
+            text-decoration: none;
+            color: $dark-blue-text-color;
+          }
+
+          &.active {
+            background-color: #b9d5fd;
+            box-sizing: border-box;
+            border-top-right-radius: 5px;
+            border-top-left-radius: 5px;
+          }
+
+          .logout-menu {
+            position: absolute;
+            top: 35px;
+            left: 0;
+            z-index: 200;
+            background-color: #fff;
+            width: 100%;
+            box-sizing: border-box;
+            border: 2px solid #b9d5fd;
+            border-bottom-right-radius: 5px;
+            border-bottom-left-radius: 5px;
+
+            .logout-btn {
+              cursor: pointer;
+              width: 100%;
+              box-sizing: border-box;
+              padding: 10px 5px;
+              text-decoration: none;
+              color: $dark-blue-text-color;
+            }
+          }
+        }
       }
     }
   }
