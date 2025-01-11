@@ -148,6 +148,10 @@
 
       .comments-list {
         max-width: 854px;
+
+        &:last-child {
+          margin-bottom: 120px;
+        }
       }
 
       .more-comments {
