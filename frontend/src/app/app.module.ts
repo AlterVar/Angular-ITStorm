@@ -13,11 +13,9 @@ import {MAT_SNACK_BAR_DEFAULT_OPTIONS, MatSnackBarModule} from "@angular/materia
 import {AuthInterceptor} from "./core/auth.interceptor";
 import {MatMenuModule} from "@angular/material/menu";
 import {CarouselModule} from "ngx-owl-carousel-o";
-import { ArticleComponent } from './shared/components/article/article.component';
 import {MatDialogModule} from "@angular/material/dialog";
 import {MatButtonModule} from "@angular/material/button";
 import {ReactiveFormsModule} from "@angular/forms";
-import { CatalogComponent } from './views/blog/catalog/catalog.component';
 
 @NgModule({
   declarations: [

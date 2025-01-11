@@ -6,6 +6,7 @@ import {LoginResponseType} from "../../../../types/login-response.type";
 import {HttpErrorResponse} from "@angular/common/http";
 import {Router} from "@angular/router";
 import {MatSnackBar} from "@angular/material/snack-bar";
+import {environment} from "../../../../environments/environment";
 
 @Component({
   selector: 'sign-up',
@@ -13,6 +14,8 @@ import {MatSnackBar} from "@angular/material/snack-bar";
   styleUrls: ['./sign-up.component.scss']
 })
 export class SignUpComponent implements OnInit {
+  serverStaticPath = environment.serverStaticPath;
+
   signupForm = this.fb.group({
     name: ['', [Validators.required]],
     email: ['', [Validators.email, Validators.required]],
