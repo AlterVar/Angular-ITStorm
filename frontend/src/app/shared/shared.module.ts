@@ -5,11 +5,13 @@ import {MatButtonModule} from "@angular/material/button";
 import {MatMenuModule} from "@angular/material/menu";
 import {ArticleComponent} from "./components/article/article.component";
 import { CommentComponent } from './components/comment/comment.component';
+import { LoaderComponent } from './components/loader/loader.component';
 
 @NgModule({
   declarations: [
     ArticleComponent,
-    CommentComponent
+    CommentComponent,
+    LoaderComponent
   ],
   imports: [
     CommonModule,
@@ -19,7 +21,8 @@ import { CommentComponent } from './components/comment/comment.component';
   ],
     exports: [
         ArticleComponent,
-        CommentComponent
+        CommentComponent,
+        LoaderComponent
     ]
 })
 export class SharedModule {

@@ -21,6 +21,7 @@ export class ArticleComponent implements OnInit {
   relatedArticles: ArticleType[] = [];
   comments: CommentType[] = [];
   isLogged: boolean = false;
+  loading: boolean = false;
   shownAll: boolean = false;
   offset: number = 0;
   shownComments: number = 3;
@@ -75,6 +76,7 @@ export class ArticleComponent implements OnInit {
         }
         this.commentsCount = comments.allCount;
         this.offset = (-10 + -(this.commentsCount - 3));
+        this.loading = false;
       })
   }
 
@@ -92,6 +94,7 @@ export class ArticleComponent implements OnInit {
   }
 
   showTenMoreComments() {
+    this.loading = true;
     this.getComments();
     this.shownComments += 10;
     this.shownAll = this.commentsCount <= this.shownComments;

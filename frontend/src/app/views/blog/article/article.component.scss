@@ -160,17 +160,21 @@
         }
       }
 
-      .more-comments {
-        display: flex;
-        align-items: center;
-        margin-bottom: 120px;
-        cursor: pointer;
+      .more-comments-container {
+        max-width: 818px;
 
-        p {
-          margin-right: 10px;
-          font-weight: 500;
-          font-size: 20px;
-          color: $light-blue-text-color;
+        .more-comments {
+          display: flex;
+          align-items: center;
+          margin-bottom: 120px;
+          cursor: pointer;
+
+          p {
+            margin-right: 10px;
+            font-weight: 500;
+            font-size: 20px;
+            color: $light-blue-text-color;
+          }
         }
       }
     }
