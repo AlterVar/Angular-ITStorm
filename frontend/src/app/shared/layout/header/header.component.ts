@@ -15,21 +15,23 @@ export class HeaderComponent implements OnInit {
   isLogged: boolean = false;
   userInfo: UserType | null = null;
   logoutMenuOpen: boolean = false;
-  route: string = '';
+  isBlog: boolean = false;
 
   constructor(private authService: AuthService,
               private userService: UserService,
               private _snackBar: MatSnackBar,
+              private activatedRoute: ActivatedRoute,
               private router: Router) {
     this.isLogged = this.authService.getIsLoggedIn();
     this.isLogged ? this.getUserInfo() : null;
   }
 
   ngOnInit(): void {
+    this.isBlog = this.router.url.includes('/blog');
     this.router.events
       .subscribe(event => {
         if (event instanceof NavigationEnd) {
-          this.route = this.router.url;
+          this.isBlog = this.router.url.includes('/blog');
         }
       })
     this.authService.isLogged$

@@ -151,16 +151,21 @@
 
     .pagination-arrow {
       cursor: pointer;
+      display: flex;
+      align-items: center;
 
-      svg rect {
-        fill: url(#pattern0_16860_651);
-      }
+      svg {
+        rect {
+          fill: url(#pattern0_16860_651);
+        }
 
-      &.disabled {
-        cursor: default;
 
-        svg rect {
-          fill: url(#pattern0_16860_639);
+        &.disabled {
+          cursor: default;
+
+          svg rect {
+            fill: url(#pattern0_16860_639);
+          }
         }
       }
     }

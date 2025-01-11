@@ -40,6 +40,9 @@ export class CatalogComponent implements OnInit {
       )
       .subscribe(params => {
         this.activeParams = ActiveParamsUtil.processParams(params);
+        if (!this.activeParams.page) {
+          this.activeParams.page = 1;
+        }
         this.appliedFilters = [];
         this.activeParams.categories?.forEach(url => {
           const foundCategory = this.categories.find(item => item.url === url);
@@ -57,7 +60,6 @@ export class CatalogComponent implements OnInit {
             for (let i = 1; i <= data.pages; i++) {
               this.pages.push(i);
             }
-
             this.articles = data.items;
           })
       })
