@@ -30,6 +30,10 @@ header.header {
         .main-menu-item {
           cursor: pointer;
           color: $dark-blue-text-color;
+
+          &.active {
+            color: $light-blue-text-color;
+          }
         }
       }
     }

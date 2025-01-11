@@ -4,7 +4,7 @@ import {UserService} from "../../user.service";
 import {DefaultResponseType} from "../../../../types/default-response.type";
 import {UserType} from "../../../../types/user.type";
 import {MatSnackBar} from "@angular/material/snack-bar";
-import {Router} from "@angular/router";
+import {ActivatedRoute, NavigationEnd, Router} from "@angular/router";
 
 @Component({
   selector: 'app-header',
@@ -15,6 +15,7 @@ export class HeaderComponent implements OnInit {
   isLogged: boolean = false;
   userInfo: UserType | null = null;
   logoutMenuOpen: boolean = false;
+  route: string = '';
 
   constructor(private authService: AuthService,
               private userService: UserService,
@@ -25,6 +26,12 @@ export class HeaderComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.router.events
+      .subscribe(event => {
+        if (event instanceof NavigationEnd) {
+          this.route = this.router.url;
+        }
+      })
     this.authService.isLogged$
       .subscribe((value: boolean) => {
         this.isLogged = value;
