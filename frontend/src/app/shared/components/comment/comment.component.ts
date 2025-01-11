@@ -16,6 +16,7 @@ export class CommentComponent implements OnInit {
   like: boolean = false;
   dislike: boolean = false;
   commentAction: string = '';
+  formattedDate: string = '';
 
   constructor(private commentsService: CommentsService,
               private authService: AuthService,
@@ -24,8 +25,8 @@ export class CommentComponent implements OnInit {
 
   ngOnInit(): void {
     if (this.comment) {
-      let formattedDate = new Date(this.comment.date);
-      this.comment.date = formatDate(formattedDate, 'mm.dd.yyyy, HH:mm', 'en-US');
+      let commentDate = new Date(this.comment.date);
+      this.formattedDate = formatDate(commentDate, 'dd.MM.yyyy HH:mm', 'en-EN');
       this.updateAction();
     }
   }
