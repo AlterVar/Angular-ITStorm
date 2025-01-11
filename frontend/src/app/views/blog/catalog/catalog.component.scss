@@ -158,14 +158,13 @@
         rect {
           fill: url(#pattern0_16860_651);
         }
+      }
 
+      &.disabled {
+        cursor: default;
 
-        &.disabled {
-          cursor: default;
-
-          svg rect {
-            fill: url(#pattern0_16860_639);
-          }
+        svg rect {
+          fill: url(#pattern0_16860_639);
         }
       }
     }
