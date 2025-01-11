@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {AuthService} from "../../../core/auth.service";
 import {UserService} from "../../user.service";
 import {DefaultResponseType} from "../../../../types/default-response.type";
@@ -25,7 +25,7 @@ export class HeaderComponent implements OnInit {
 
   ngOnInit(): void {
     this.authService.isLogged$
-      .subscribe((value:boolean) => {
+      .subscribe((value: boolean) => {
         this.isLogged = value;
 
         if (this.isLogged) {
@@ -50,10 +50,17 @@ export class HeaderComponent implements OnInit {
 
   logout() {
     this.authService.logout()
-      .subscribe(() => {
-        this.authService.removeTokens();
-        this._snackBar.open('Вы успешно вышли из аккаунта');
-        this.router.navigate(['/']);
+      .subscribe({
+        next: () => {
+          this.authService.removeTokens();
+          this._snackBar.open('Вы успешно вышли из аккаунта');
+          this.router.navigate(['/']);
+        },
+        error: err => {
+          this.authService.removeTokens();
+          this._snackBar.open('Вы успешно вышли из аккаунта');
+          this.router.navigate(['/']);
+        }
       })
   }
 }

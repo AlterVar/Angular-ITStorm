@@ -11,11 +11,11 @@
     <nav class="main-menu">
       <ul class="main-menu-list">
         <!-- TODO: links via routerLink -->
-        <li class="main-menu-item">Услуги</li>
-        <li class="main-menu-item">О нас</li>
-        <li class="main-menu-item" routerLink="/blog">Статьи</li>
-        <li class="main-menu-item">Отзывы</li>
-        <li class="main-menu-item">Контакты</li>
+        <li class="main-menu-item" routerLink="/" fragment="services">Услуги</li>
+        <li class="main-menu-item" routerLink="/" fragment="about">О нас</li>
+        <li class="main-menu-item" routerLink="/" fragment="articles">Статьи</li>
+        <li class="main-menu-item" routerLink="/" fragment="reviews">Отзывы</li>
+        <li class="main-menu-item" routerLink="/" fragment="contacts">Контакты</li>
       </ul>
     </nav>
     <div class="header-phone">
@@ -35,7 +35,6 @@
       <div class="profile-text" *ngIf="isLogged">
         <a mat-button [matMenuTriggerFor]="menu">Привет, {{userInfo?.name ? userInfo?.name : 'Незнакомец'}}!</a>
         <mat-menu #menu="matMenu">
-          <button mat-menu-item routerLink="/profile">Профиль</button>
           <button mat-menu-item (click)="logout()">Выйти</button>
         </mat-menu>
       </div>

@@ -31,10 +31,10 @@
           &::placeholder {
             color: #a8aba7;
           }
+        }
 
-          &:last-child {
-            margin-bottom: 10px;
-          }
+        input[type='password'] {
+          margin-bottom: 10px;
         }
 
         .agreement {

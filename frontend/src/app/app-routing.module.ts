@@ -3,7 +3,6 @@ import { RouterModule, Routes } from '@angular/router';
 import {LayoutComponent} from "./shared/layout/layout.component";
 import {MainComponent} from "./views/main/main.component";
 import {AuthForwardGuard} from "./core/auth-forward.guard";
-import {CatalogComponent} from "./views/blog/catalog/catalog.component";
 
 const routes: Routes = [
   {path: '', component: LayoutComponent, children: [
@@ -14,7 +13,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(routes, {anchorScrolling: "enabled", scrollPositionRestoration: "enabled"})],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }

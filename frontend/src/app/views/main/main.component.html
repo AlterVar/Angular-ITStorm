@@ -74,7 +74,7 @@
       </div>
     </section>
 
-    <section class="services">
+    <section class="services" id="services">
       <h2 class="section-title">Услуги, которые мы предлагаем</h2>
       <ul class="services-cards">
         <li class="services-card">
@@ -136,7 +136,7 @@
       </ul>
     </section>
 
-    <section class="about-us">
+    <section class="about-us" id="about">
       <div class="section-image">
         <img src="assets/images/about-bg.png" alt="обсуждение">
       </div>
@@ -185,7 +185,7 @@
       </div>
     </section>
 
-    <section class="popular-articles">
+    <section class="popular-articles" id="articles">
       <h2 class="section-title">Популярные статьи из блога</h2>
       <div class="popular-articles-list">
         <article *ngFor="let article of popularArticles" [article]="article"></article>
@@ -201,7 +201,7 @@
       </a>
     </section>
 
-    <section class="reviews">
+    <section class="reviews" id="reviews">
       <h2 class="section-title">Отзывы о нашей работе</h2>
       <div class="carousel-arrows">
         <a class="move-backward" (click)="owlReviews.prev()">
@@ -274,7 +274,7 @@
       </div>
     </section>
 
-    <section class="contacts">
+    <section class="contacts" id="contacts">
 <!--      TODO: поменять на гугл карты (?) Дизайн не тот-->
       <div class="map">
         <iframe
