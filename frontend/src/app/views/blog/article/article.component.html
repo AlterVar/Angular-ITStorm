@@ -62,6 +62,9 @@
     </div>
     <div class="comments">
       <h2 class="comments-title">Комментарии к статье</h2>
+      <div class="comments-absence" *ngIf="isLogged && commentsCount === 0">
+        Будьте первым, кто оставит свой комментарий к статье!
+      </div>
       <div class="comment-input" *ngIf="isLogged">
         <textarea class="comment-textarea" placeholder="Напишите Ваш комментарий к статье..." [(ngModel)]="newCommentText"></textarea>
         <button class="btn" (click)="sendComment()">Опубликовать комментарий</button>
