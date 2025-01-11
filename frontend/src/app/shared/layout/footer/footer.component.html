@@ -11,16 +11,14 @@
       </div>
       <nav class="main-menu">
         <ul class="main-menu-list">
-          <!-- TODO: links via routerLink -->
-          <li class="main-menu-item">Услуги</li>
-          <li class="main-menu-item">О нас</li>
+          <li class="main-menu-item" routerLink="/" fragment="services">Услуги</li>
+          <li class="main-menu-item" routerLink="/" fragment="about">О нас</li>
           <li class="main-menu-item" routerLink="/blog">Статьи</li>
-          <li class="main-menu-item">Отзывы</li>
-          <li class="main-menu-item">Контакты</li>
+          <li class="main-menu-item" routerLink="/" fragment="reviews">Отзывы</li>
+          <li class="main-menu-item" routerLink="/" fragment="contacts">Контакты</li>
         </ul>
       </nav>
     </div>
-<!--    TODO: добавить ссылки? -->
     <div class="info">
       <div class="info-section info-address">
         <h2 class="info-title">Адрес</h2>
@@ -28,12 +26,12 @@
       </div>
       <div class="info-section info-phone">
         <h2 class="info-title">Телефон</h2>
-        <p class="info-description">+ 7 (499) 343-13-34</p>
+        <a href="tel:74993431334" class="info-description">+7 (499) 343-13-34</a>
         <button class="btn" (click)="openDialog()">Перезвоните мне</button>
       </div>
       <div class="info-section info-email">
         <h2 class="info-title">E-mail</h2>
-        <p class="info-description">info@itstorm.com</p>
+        <a href="mailto:info@itstorm.com" class="info-description">info@itstorm.com</a>
       </div>
       <div class="info-section info-socials">
         <h2 class="info-title">Мы в социальных сетях</h2>
@@ -62,7 +60,7 @@
   </div>
 </footer>
 
-<div class="consultation-dialog" id="consultation-dialog" (click)="closeDialog($event)">
+<div class="consultation-dialog" *ngIf="consultationOpen" (click)="closeDialog($event)">
   <div class="dialog-container">
     <div class="close-btn" (click)="closeDialog($event)" id="consultation-btn">
       <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -71,7 +69,8 @@
       </svg>
     </div>
     <div class="dialog-option" *ngIf="!requestIsSent">
-      <h2 class="dialog-title">Заявка на услугу</h2>
+      <h2 class="dialog-title">Закажите бесплатную
+        консультацию!</h2>
       <div class="dialog-content" [formGroup]="consultationForm">
         <input type="text" placeholder="Ваше имя" formControlName="name"
                [ngStyle]="{'border-color': consultationForm.get('name')?.invalid

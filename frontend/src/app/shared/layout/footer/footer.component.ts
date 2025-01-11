@@ -10,7 +10,7 @@ import {CallbackService} from "../../services/callback.service";
   styleUrls: ['./footer.component.scss']
 })
 export class FooterComponent implements OnInit {
-  dialog: HTMLElement | null = null;
+  consultationOpen: boolean = false;
   dialogBtn: HTMLElement | null = null;
   requestIsSent: boolean = false;
 
@@ -24,27 +24,24 @@ export class FooterComponent implements OnInit {
               private fb: FormBuilder) { }
 
   ngOnInit(): void {
-    this.dialog = document.getElementById('consultation-dialog');
     this.dialogBtn = document.getElementById('consultation-btn');
   }
 
   openDialog() {
-    if (this.dialog) {
-      this.dialog.style.display = 'flex';
-    }
+    this.consultationOpen = !this.consultationOpen;
   }
 
   closeDialog(event: Event) {
     event.stopPropagation();
     this.requestIsSent = false;
-    if (this.dialog && (event.target === event.currentTarget || event.currentTarget === this.dialogBtn)) {
+    if (event.target === event.currentTarget || event.currentTarget === this.dialogBtn) {
       this.consultationForm.setValue({
         name: '',
         phone: ''
       })
       this.consultationForm.markAsUntouched();
       this.consultationForm.markAsPristine();
-      this.dialog.style.display = 'none';
+      this.consultationOpen = !this.consultationOpen;
     }
   }
 

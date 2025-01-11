@@ -65,6 +65,10 @@ footer.footer {
         }
 
         &.info-phone {
+          .info-description {
+            text-decoration: none;
+            display: block;
+          }
           .btn {
             width: 153px;
             height: 36px;
@@ -74,6 +78,11 @@ footer.footer {
         }
 
         &.info-email {
+          .info-description {
+            text-decoration: none;
+            display: block;
+          }
+
           .info-description {
             font-size: 14px;
           }
