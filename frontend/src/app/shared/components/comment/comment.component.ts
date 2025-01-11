@@ -13,8 +13,8 @@ import {AuthService} from "../../../core/auth.service";
 })
 export class CommentComponent implements OnInit {
   @Input() comment: CommentType | null = null;
-  like: boolean = false;
-  dislike: boolean = false;
+  like: number = 0;
+  dislike: number = 0;
   commentAction: string = '';
   formattedDate: string = '';
 
@@ -27,80 +27,82 @@ export class CommentComponent implements OnInit {
     if (this.comment) {
       let commentDate = new Date(this.comment.date);
       this.formattedDate = formatDate(commentDate, 'dd.MM.yyyy HH:mm', 'en-EN');
-      this.updateAction();
-    }
-  }
-
-  updateAction() {
-    this.commentsService.getActionsForComment(this.comment!.id)
-      .subscribe((data: { comment: string, action: string }[]) => {
-        const actions = data as { comment: string, action: string }[];
-        if (actions.length > 0) {
-          this.commentAction = actions[0].action;
-          if (this.commentAction) {
-            if (this.commentAction === 'like') {
-              this.like = true;
-              this.dislike = false;
-            } else {
-              this.dislike = true;
-              this.like = false;
+      this.commentsService.getActionsForComment(this.comment!.id)
+        .subscribe((data: { comment: string, action: string }[]) => {
+          const actions = data as { comment: string, action: string }[];
+          if (actions.length > 0) {
+            this.commentAction = actions[0].action;
+            if (this.commentAction) {
+              this.commentAction === 'like' ? this.like = 1 : this.dislike = 1;
             }
+          } else {
+            this.like = 0;
+            this.dislike = 0;
           }
-        }
-      })
+        })
+    }
   }
 
   sendAction(action: string, id: string) {
     if (!this.authService.getIsLoggedIn()) {
       this._snackBar.open('Чтобы оставлять реакции, необходимо авторизоваться')
     } else {
+      this.changeReaction(action);
       this.commentsService.applyAction(action, id)
         .subscribe({
           next: (data: DefaultResponseType) => {
-            if (action !== 'violate' && data.error) {
-              this._snackBar.open('Не получилось оставить реакцию, обратитесь в поддержку');
-            }
             if (action === 'violate') {
-              if (!data.error) {
-                this._snackBar.open('Жалоба была успешно отправлена')
-              }
+              this._snackBar.open('Жалоба успешно отправлена');
+              return;
             }
-            this.updateAction();
+            this.changeAction();
           },
           error: err => {
-            this._snackBar.open('Жалоба уже была отправлена');
+            this._snackBar.open('Жалоба уже отправлена');
           }
         })
     }
   }
 
-  updateReactions(action: string, id: string) {
-    if (!this.authService.getIsLoggedIn()) {
-      this._snackBar.open('Чтобы оставлять реакции, необходимо авторизоваться');
-      return;
-    }
-
-    if (!this.commentAction || this.commentAction !== action) {
-      action === 'like' ? this.addLike() : this.addDislike();
-      this.sendAction(action, id);
-    }
+  changeAction() {
+    this.commentsService.getActionsForComment(this.comment!.id)
+      .subscribe((data: { comment: string, action: string }[]) => {
+        const actions = data as { comment: string, action: string }[];
+        if (actions.length > 0) {
+          this.commentAction = actions[0].action;
+        }
+      })
   }
 
-  addLike() {
-    if (this.comment && this.comment.dislikesCount > 0 && this.commentAction === 'dislike') {
-      this.comment.dislikesCount--;
+  changeReaction(action: string) {
+    if (action === 'like') {
+      if (this.like) {
+        this.like = 0;
+        this.comment!.likesCount--;
+        return;
+      }
+      if (this.dislike) {
+        this.dislike = 0;
+        this.comment!.dislikesCount--;
+      }
+      this.like = 1;
+      this.comment!.likesCount++;
+      this._snackBar.open('Ваш голос учтен');
     }
-    this.comment!.likesCount++;
-    this.like = true;
-    this.dislike = false;
-  }
 
-  addDislike() {
-    if (this.comment && this.comment.likesCount > 0 && this.commentAction === 'like') {
-      this.comment.likesCount--;
+    if (action === 'dislike') {
+      if (this.dislike) {
+        this.dislike = 0;
+        this.comment!.dislikesCount--;
+        return;
+      }
+      if (this.like) {
+        this.like = 0;
+        this.comment!.likesCount--;
+      }
+      this.dislike = 1;
+      this.comment!.dislikesCount++;
+      this._snackBar.open('Ваш голос учтен');
     }
-    this.comment!.dislikesCount++;
-    this.like = false;
-    this.dislike = true;
   }
 }
