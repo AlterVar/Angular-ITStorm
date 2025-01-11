@@ -17,9 +17,9 @@ import {CallbackService} from "../../shared/services/callback.service";
 export class MainComponent implements OnInit {
   popularArticles: ArticleType[] = [];
   dialogData: string = 'Услуга';
-  dialog: HTMLElement | null = null;
-  dialogBtn: HTMLElement | null = null;
+  dialogOpen: boolean = false;
   requestIsSent: boolean = false;
+  dialogBtn: HTMLElement | null = null;
 
   customOptionsHero: OwlOptions = {
     loop: true,
@@ -77,7 +77,6 @@ export class MainComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.dialog = document.getElementById('services-dialog');
     this.dialogBtn = document.getElementById('dialog-btn');
     this.articleService.getPopularArticles()
       .subscribe({
@@ -104,15 +103,13 @@ export class MainComponent implements OnInit {
   openDialog(title: string) {
     this.dialogData = title;
     this.serviceForm.get('service')?.setValue(title);
-    if (this.dialog) {
-      this.dialog.style.display = 'flex';
-    }
+    this.dialogOpen = !this.dialogOpen;
   }
 
   closeDialog(event: Event) {
     event.stopPropagation();
     this.requestIsSent = false;
-    if (this.dialog && (event.target === event.currentTarget || event.currentTarget === this.dialogBtn)) {
+    if (event.target === event.currentTarget || event.currentTarget === this.dialogBtn) {
       this.serviceForm.setValue({
         service: '',
         name: '',
@@ -120,7 +117,7 @@ export class MainComponent implements OnInit {
       })
       this.serviceForm.markAsUntouched();
       this.serviceForm.markAsPristine();
-      this.dialog.style.display = 'none';
+      this.dialogOpen = !this.dialogOpen;
     }
   }
 
