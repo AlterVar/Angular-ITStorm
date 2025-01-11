@@ -32,4 +32,11 @@ export class CommentsService {
   getActionsForComment(commentId: string): Observable<{ comment: string, action: string }[]> {
     return this.http.get<{ comment: string, action: string }[]>(environment.api + 'comments/' + commentId + '/actions');
   }
+
+  sendComment(text: string, id: string): Observable<DefaultResponseType> {
+    return this.http.post<DefaultResponseType>(environment.api + 'comments', {
+      text: text,
+      article: id
+    })
+  }
 }

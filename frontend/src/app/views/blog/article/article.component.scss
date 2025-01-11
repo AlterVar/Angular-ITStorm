@@ -118,10 +118,50 @@
           text-decoration: none;
           color: #b9d5fd;
         }
+
+        .comment-textarea {
+          width: 818px;
+          height: 248px;
+          padding: 20px;
+          outline: none;
+          border: 2px solid $light-blue-text-color;
+          box-sizing: border-box;
+          margin-bottom: 20px;
+          font-family: "Montserrat", sans-serif;
+          font-weight: 400;
+          color: $light-blue-text-color;
+          font-size: 14px;
+
+          &::placeholder {
+            color: #a8aba7;
+            font-size: 14px;
+          }
+        }
+
+        .btn {
+          display: block;
+          padding: 15px 40px;
+          width: 422px;
+          height: 51px;
+        }
       }
 
       .comments-list {
         max-width: 854px;
+      }
+
+      .more-comments {
+        display: flex;
+        align-items: center;
+        margin-bottom: 120px;
+        cursor: pointer;
+
+        p {
+          margin-right: 10px;
+          font-weight: 500;
+          font-size: 20px;
+          color: $light-blue-text-color;
+        }
       }
     }
   }

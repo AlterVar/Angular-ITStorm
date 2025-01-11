@@ -6,6 +6,7 @@ import { CatalogComponent } from './catalog/catalog.component';
 import {SharedModule} from "../../shared/shared.module";
 import {MatExpansionModule} from "@angular/material/expansion";
 import { ArticleComponent } from './article/article.component';
+import {FormsModule} from "@angular/forms";
 
 
 @NgModule({
@@ -16,6 +17,7 @@ import { ArticleComponent } from './article/article.component';
   imports: [
     CommonModule,
     SharedModule,
+    FormsModule,
     MatExpansionModule,
     BlogRoutingModule
   ]

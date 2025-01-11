@@ -22,6 +22,7 @@ export class ArticleComponent implements OnInit {
   comments: CommentType[] = [];
   isLogged: boolean = false;
   numberOfComments: number = 3;
+  newCommentText: string = '';
 
   constructor(private articlesService: ArticlesService,
               private activatedRoute: ActivatedRoute,
@@ -31,26 +32,21 @@ export class ArticleComponent implements OnInit {
               private _snackBar: MatSnackBar) { }
 
   ngOnInit(): void {
+    this.numberOfComments = 0;
     this.isLogged = this.authService.getIsLoggedIn();
     this.activatedRoute.params
       .subscribe(params => {
         this.articlesService.getArticle(params['url'])
           .subscribe((data:ArticleType) => {
             this.article = data;
-            if (data.comments && data.text) {
-              this.sanitizer.bypassSecurityTrustHtml(data.text);
+            if (data.comments && data.commentsCount) {
+              this.numberOfComments = +(data.commentsCount) - 3;
             }
 
-            this.commentsService.getComments({offset: this.numberOfComments, article: this.article?.id})
-              .subscribe((data: DefaultResponseType | {allCount: number, comments: CommentType[]}) => {
-                if (data as DefaultResponseType && (data as DefaultResponseType).error) {
-                  console.log((data as DefaultResponseType).message);
-                }
-                const comments = data as {allCount: number, comments: CommentType[]};
-                if (comments) {
-                  this.comments = comments.comments
-                }
-              })
+            if (data.comments && data.text) {
+              this.sanitizer.bypassSecurityTrustHtml(data.text);
+              this.getComments();
+            }
           });
 
         this.articlesService.getRelatedArticles(params['url'])
@@ -58,5 +54,40 @@ export class ArticleComponent implements OnInit {
             this.relatedArticles = data;
           })
       })
+  }
+
+  getComments() {
+    this.commentsService.getComments({offset: this.numberOfComments, article: this.article?.id})
+      .subscribe((data: DefaultResponseType | {allCount: number, comments: CommentType[]}) => {
+        if (data as DefaultResponseType && (data as DefaultResponseType).error) {
+          console.log((data as DefaultResponseType).message);
+        }
+        const comments = data as {allCount: number, comments: CommentType[]};
+        if (comments) {
+          this.comments = comments.comments;
+        }
+      })
+  }
+
+  sendComment() {
+    if (this.newCommentText) {
+      this.commentsService.sendComment(this.newCommentText, this.article!.id)
+        .subscribe((data: DefaultResponseType) => {
+          this.getComments();
+          this._snackBar.open(data.message);
+        })
+    }
+  }
+
+  showAllComments() {
+    this.numberOfComments = 0;
+    this.getComments();
+  }
+
+  showLessComments() {
+    if (this.article && this.article.commentsCount) {
+      this.numberOfComments = this.article.commentsCount - 3;
+      this.getComments();
+    }
   }
 }
