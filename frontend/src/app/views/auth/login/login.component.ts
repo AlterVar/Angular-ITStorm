@@ -6,6 +6,7 @@ import {DefaultResponseType} from "../../../../types/default-response.type";
 import {LoginResponseType} from "../../../../types/login-response.type";
 import {HttpErrorResponse} from "@angular/common/http";
 import {MatSnackBar} from "@angular/material/snack-bar";
+import {Subscription} from "rxjs";
 
 @Component({
   selector: 'login',
@@ -18,6 +19,7 @@ export class LoginComponent implements OnInit {
     password: ['', [Validators.required]],
     rememberMe: [false]
   })
+  subscription = new Subscription();
 
   constructor(private fb: FormBuilder,
               private authService: AuthService,
@@ -29,6 +31,7 @@ export class LoginComponent implements OnInit {
 
   login() {
     if (this.loginForm.valid && this.loginForm.value.email && this.loginForm.value.password) {
+      this.subscription.add(
       this.authService.login(this.loginForm.value.email, this.loginForm.value.password, !!this.loginForm.value.rememberMe)
         .subscribe({
           next: (data: DefaultResponseType | LoginResponseType) => {
@@ -58,6 +61,7 @@ export class LoginComponent implements OnInit {
             }
           }
         })
+      )
     }
   }
 }

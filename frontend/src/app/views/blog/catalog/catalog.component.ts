@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {ArticlesService} from "../../../shared/services/articles.service";
 import {ArticleType} from "../../../../types/article.type";
 import {ActivatedRoute, Router} from "@angular/router";
@@ -7,20 +7,21 @@ import {ActiveParamsType} from "../../../../types/active-params.type";
 import {AppliedFilterType} from "../../../../types/applied-filter.type";
 import {CategoriesService} from "../../../shared/services/categories.service";
 import {CategoryType} from "../../../../types/category.type";
-import {debounceTime} from "rxjs";
+import {debounceTime, Subscription} from "rxjs";
 
 @Component({
   selector: 'app-blog',
   templateUrl: './catalog.component.html',
   styleUrls: ['./catalog.component.scss']
 })
-export class CatalogComponent implements OnInit {
+export class CatalogComponent implements OnInit, OnDestroy {
   articles: ArticleType[] = [];
   pages: number[] = [];
   categories: CategoryType[] = [];
   activeParams: ActiveParamsType = {};
   appliedFilters: AppliedFilterType[] = [];
   filterOpen: boolean = false;
+  subscription = new Subscription();
 
   constructor(private articleService: ArticlesService,
               private activatedRoute: ActivatedRoute,
@@ -29,11 +30,14 @@ export class CatalogComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.subscription.add(
     this.categoriesService.getCategories()
       .subscribe(data => {
         this.categories = data;
       })
+    )
 
+    this.subscription.add(
     this.activatedRoute.queryParams
       .pipe(
         debounceTime(500)
@@ -63,6 +67,11 @@ export class CatalogComponent implements OnInit {
             this.articles = data.items;
           })
       })
+    )
+  }
+
+  ngOnDestroy() {
+    this.subscription?.unsubscribe();
   }
 
   toggleFilterSelect() {

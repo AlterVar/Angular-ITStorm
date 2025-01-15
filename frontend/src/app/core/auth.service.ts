@@ -50,9 +50,13 @@ export class AuthService {
   }
 
   refresh(): Observable<DefaultResponseType | LoginResponseType>  {
-    return this.http.post<DefaultResponseType | LoginResponseType>(environment.api + 'refresh', {
-      refreshToken: localStorage.getItem(this.refreshTokenKey)
-    });
+    const tokens = this.getTokens();
+    if (tokens && tokens.refreshToken) {
+      return this.http.post<DefaultResponseType | LoginResponseType>(environment.api + 'refresh', {
+        refreshToken: localStorage.getItem(this.refreshTokenKey)
+      });
+    }
+    throw throwError(() => 'Can not use token');
   }
 
   signup(name: string, email: string, password: string): Observable<DefaultResponseType | LoginResponseType> {

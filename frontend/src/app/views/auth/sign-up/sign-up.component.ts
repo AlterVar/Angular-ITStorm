@@ -7,6 +7,7 @@ import {HttpErrorResponse} from "@angular/common/http";
 import {Router} from "@angular/router";
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {environment} from "../../../../environments/environment";
+import {Subscription} from "rxjs";
 
 @Component({
   selector: 'sign-up',
@@ -15,6 +16,7 @@ import {environment} from "../../../../environments/environment";
 })
 export class SignUpComponent implements OnInit {
   serverStaticPath = environment.serverStaticPath;
+  subscription = new Subscription();
 
   signupForm = this.fb.group({
     name: ['', [Validators.required, Validators.pattern(/^(([А-Я][а-я]+)+\s?){1,3}$/)]],
@@ -34,6 +36,7 @@ export class SignUpComponent implements OnInit {
   signup() {
     if (this.signupForm.valid && this.signupForm.value.email && this.signupForm.value.password
       && this.signupForm.value.name) {
+      this.subscription.add(
       this.authService.signup(this.signupForm.value.name, this.signupForm.value.email, this.signupForm.value.password)
         .subscribe({
           next: (data: DefaultResponseType | LoginResponseType) => {
@@ -63,6 +66,7 @@ export class SignUpComponent implements OnInit {
             }
           }
         })
+      )
     }
   }
 

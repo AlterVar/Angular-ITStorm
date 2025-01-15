@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {ArticlesService} from "../../../shared/services/articles.service";
-import {ActivatedRoute, Router} from "@angular/router";
+import {ActivatedRoute} from "@angular/router";
 import {ArticleType} from "../../../../types/article.type";
 import {environment} from "../../../../environments/environment";
 import {CommentType} from "../../../../types/comment.type";
@@ -9,13 +9,14 @@ import {AuthService} from "../../../core/auth.service";
 import {CommentsService} from "../../../shared/services/comments.service";
 import {DefaultResponseType} from "../../../../types/default-response.type";
 import {MatSnackBar} from "@angular/material/snack-bar";
+import {Subscription} from "rxjs";
 
 @Component({
   selector: 'app-article',
   templateUrl: './article.component.html',
   styleUrls: ['./article.component.scss']
 })
-export class ArticleComponent implements OnInit {
+export class ArticleComponent implements OnInit, OnDestroy {
   serverStaticPath = environment.serverStaticPath;
   article: ArticleType | null = null;
   relatedArticles: ArticleType[] = [];
@@ -27,6 +28,7 @@ export class ArticleComponent implements OnInit {
   shownComments: number = 3;
   commentsCount: number = 0;
   newCommentText: string = '';
+  subscription = new Subscription();
 
   constructor(private articlesService: ArticlesService,
               private activatedRoute: ActivatedRoute,
@@ -37,6 +39,7 @@ export class ArticleComponent implements OnInit {
 
   ngOnInit(): void {
     this.isLogged = this.authService.getIsLoggedIn();
+    this.subscription.add(
     this.activatedRoute.params
       .subscribe(params => {
         this.articlesService.getArticle(params['url'])
@@ -54,14 +57,22 @@ export class ArticleComponent implements OnInit {
             }
           });
 
+        this.subscription.add(
         this.articlesService.getRelatedArticles(params['url'])
           .subscribe((data: ArticleType[]) => {
             this.relatedArticles = data;
           })
+        )
       })
+    )
+  }
+
+  ngOnDestroy(): void {
+    this.subscription?.unsubscribe();
   }
 
   getComments(offset: number = this.shownComments) {
+    this.subscription.add(
     this.commentsService.getComments({offset: offset, article: this.article?.id})
       .subscribe((data: DefaultResponseType | {allCount: number, comments: CommentType[]}) => {
         if (data as DefaultResponseType && (data as DefaultResponseType).error) {
@@ -78,10 +89,12 @@ export class ArticleComponent implements OnInit {
         this.offset = (-10 + -(this.commentsCount - 3));
         this.loading = false;
       })
+    )
   }
 
   sendComment() {
     if (this.newCommentText) {
+      this.subscription.add(
       this.commentsService.sendComment(this.newCommentText, this.article!.id)
         .subscribe((data: DefaultResponseType) => {
           this.newCommentText = '';
@@ -90,6 +103,7 @@ export class ArticleComponent implements OnInit {
           this.getComments(this.offset);
           this._snackBar.open(data.message);
         })
+      )
     }
   }
 

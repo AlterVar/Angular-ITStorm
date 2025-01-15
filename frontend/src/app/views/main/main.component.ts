@@ -8,6 +8,7 @@ import {MatSnackBar} from "@angular/material/snack-bar";
 import {MatDialog, MatDialogRef} from "@angular/material/dialog";
 import {FormBuilder, Validators} from "@angular/forms";
 import {CallbackService} from "../../shared/services/callback.service";
+import {Subscription} from "rxjs";
 
 @Component({
   selector: 'app-main',
@@ -21,6 +22,7 @@ export class MainComponent implements OnInit {
   requestIsSent: boolean = false;
   responseIsOk: boolean = true;
   dialogBtn: HTMLElement | null = null;
+  subscription = new Subscription();
 
   customOptionsHero: OwlOptions = {
     loop: true,
@@ -78,6 +80,7 @@ export class MainComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.subscription.add(
     this.articleService.getPopularArticles()
       .subscribe({
         next: (data: DefaultResponseType | ArticleType[]) => {
@@ -94,6 +97,7 @@ export class MainComponent implements OnInit {
           }
         }
       })
+    )
   }
 
   makeActive(data: SlidesOutputData) {
@@ -126,6 +130,7 @@ export class MainComponent implements OnInit {
   sendCallbackRequest() {
     this.responseIsOk = true;
     if (this.serviceForm.value.name && this.serviceForm.value.phone && this.serviceForm.controls.service.value) {
+      this.subscription.add(
       this.callbackService.sendCallbackRequest({
         name: this.serviceForm.value.name,
         phone: this.serviceForm.value.phone,
@@ -142,6 +147,7 @@ export class MainComponent implements OnInit {
             this.requestIsSent = false;
           }
         })
+      )
     }
   }
 }
