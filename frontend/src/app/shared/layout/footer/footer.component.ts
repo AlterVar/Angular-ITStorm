@@ -26,7 +26,6 @@ export class FooterComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.dialogBtn = document.getElementById('consultation-btn');
   }
 
   openDialog() {
@@ -35,6 +34,7 @@ export class FooterComponent implements OnInit {
 
   closeDialog(event: Event) {
     event.stopPropagation();
+    this.dialogBtn = document.getElementById('consultation-btn');
     this.requestIsSent = false;
     if (event.target === event.currentTarget || event.currentTarget === this.dialogBtn) {
       this.consultationForm.setValue({

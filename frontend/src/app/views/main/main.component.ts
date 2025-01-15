@@ -78,7 +78,6 @@ export class MainComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.dialogBtn = document.getElementById('dialog-btn');
     this.articleService.getPopularArticles()
       .subscribe({
         next: (data: DefaultResponseType | ArticleType[]) => {
@@ -109,6 +108,7 @@ export class MainComponent implements OnInit {
 
   closeDialog(event: Event) {
     event.stopPropagation();
+    this.dialogBtn = document.getElementById('dialog-btn');
     this.requestIsSent = false;
     if (event.target === event.currentTarget || event.currentTarget === this.dialogBtn) {
       this.serviceForm.setValue({
